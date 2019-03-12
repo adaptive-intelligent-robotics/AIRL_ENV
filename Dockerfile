@@ -25,7 +25,7 @@ ENV LD_LIBRARY_PATH /usr/libx86_64-linux-gnu
 RUN mkdir /git && cd /git && git clone https://github.com/sferes2/sferes2.git && cd sferes2 && git checkout a35890af6b818bdafafe0bcaf36457bfd286ca12 && ./waf configure && ./waf build
  
 FROM install_sferes2 as install_dart
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     pkg-config \
