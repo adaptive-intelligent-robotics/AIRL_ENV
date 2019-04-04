@@ -10,7 +10,6 @@ It includes:
 - (TO COME) [Tensorflow](https://www.tensorflow.org/), compiled from source with cuda 10 and ready to link with sferes2. 
 
 # Using AIRL_env
------------
 ## Install docker
 First you need to have Docker installed, more information [here](https://docs.docker.com/install/), or for Ubuntu specifically [here](https://docs.docker.com/install/linux/docker-ce/ubuntu/). We will assume in the following that your are on the docker groups as suggested [here](https://docs.docker.com/install/linux/linux-postinstall/), and the commands will not be prefaced with "sudo". 
 
@@ -159,4 +158,4 @@ writing...progress
 ```
 This experiment can run for a LONG period of time, so you will probably want to kill it with ctrl+c.
 
-
+Sferes2 creates a new folder for execution of the experiments. For instance, in the example above, the folder `2019-04-04_12_05_39_207` contains all the file produced during the experiment. These files are precious are they are the experimental data that you will use to analyse the performance of the algorithms. You will have to extract these file from the Docker container. This can be done by copying them in your experiment's folder. (NOTE: this currently does not work on the AIRL Computing server because of the NFS rights managements, can be solved my mounting a volume on the local hard drive).
