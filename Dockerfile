@@ -36,6 +36,9 @@ RUN apt-get update && apt-get install -y \
     libassimp-dev \
     libccd-dev \
     libfcl-dev \
+    libxi-dev \
+    libxmu-dev \
+    freeglut3-dev \
     libopenscenegraph-dev \
     libbullet-dev \
     libode-dev \
