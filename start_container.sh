@@ -1,5 +1,5 @@
-LOCAL_EXP_PATH='/Users/antoinecully/git'
-IMAGENAME='airl_env' #aneoshun/airl_env:dart'
+LOCAL_EXP_PATH=~/'git'
+IMAGENAME='aneoshun/airl_env:dart_exp_ready'
 CONTAINERNAME='airl_env'
 
 if [ ! "$(docker ps -q -f name=^/$CONTAINERNAME)" ]; then
