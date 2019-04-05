@@ -50,7 +50,7 @@ RUN mkdir /workspace
 WORKDIR /git
 RUN git clone git://github.com/dartsim/dart.git && cd /git/dart && git checkout release-7.0 && mkdir build && cd build
 RUN cd ./dart/build && cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace .. && make -j6 install
-RUN rm -rf ./dart
+# RUN rm -rf ./dart
 ENV LD_LIBRARY_PATH /workspace/lib:/usr/libx86_64-linux-gnu
 
 
