@@ -1,6 +1,8 @@
 LOCAL_EXP_PATH=~/'git'
-IMAGENAME='aneoshun/airl_env:dart_exp_graphic_test'
+IMAGENAME='aneoshun/airl_env:airl_visu'
 CONTAINERNAME='airl_env'
+NOVNC_IP=6081
+
 
 while getopts d flag
 do
@@ -17,21 +19,11 @@ do
 done
 #shift $(( OPTIND - 1 ))  # shift past the last flag or argument
 
-
+echo "Visualisation available after activating the visu_server.sh script at the http://localhost:$NOVNC_IP/"
 if [ ! "$(docker ps -q -f name=^/$CONTAINERNAME)" ]; then
     if [ "$(docker ps -aq -f status=exited -f name=^/$CONTAINERNAME)" ]; then
         docker start -ai airl_env
     else
-	if [ "$V_DISPLAY" = true ] ; then
-	    xhost + 127.0.0.1
-	    xhost local:root
-	    docker run --privileged --name=$CONTAINERNAME -e DISPLAY=host.docker.internal:0 -m 8GB -it $IMAGENAME
-	else
-            docker run --privileged --name=$CONTAINERNAME -m 8GB -it -v /tmp/.X11-unix:/tmp/.X11-unix $IMAGENAME
-	fi
-
+	docker run --privileged --name=$CONTAINERNAME -p $NOVNC_IP:6080 -m 8GB -it $IMAGENAME
     fi
 fi
-
-
-#=host.docker.internal:0
