@@ -164,7 +164,7 @@ Sferes2 creates a new folder for execution of the experiments. For instance, in 
 For a cross-platform visualisation of the opengl environment, we use in combination xinit (Xdummy), x11vnc, and novnc, to setup a HTML5 viewer. 
 To start the visualisation server (VISU_server), simply type in the container’s terminal: 
 `visu_server.sh&’
-This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface at the address [http://localhost:6081/]   (the IP can be changed in the start_container.sh). 
+This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface at the address [http://localhost:6081/](http://localhost:6081/) (the IP can be changed in the start_container.sh). 
 You can test the interface by going into the robot_dart folder and running one of the example:
 ```
 cd robot_dart
