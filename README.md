@@ -16,10 +16,8 @@ First you need to have Docker installed, more information [here](https://docs.do
 ## Pull the docker image
 To pull the docker image you can run the following command: 
 ```
-docker pull aneoshun/airl_env:dart_exp_ready
+docker pull aneoshun/airl_env:latest
 ```
-Note: `dart_exp_ready` refers to the current latest tag, to check the other and future tags have a look [here](https://hub.docker.com/r/aneoshun/airl_env/tags).
-
 You can check that the image has been downloaded with the following command: 
 ```
 docker image ls
@@ -27,7 +25,7 @@ docker image ls
 which should return something like: 
 ```
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-aneoshun/airl_env   dart_exp_ready      ee1dda2b4673        17 hours ago        4.56GB
+aneoshun/airl_env   latest              5b47d0ae7998        15 minutes ago      4.77GB
 ```
 
 ## Start a docker container from the docker image
@@ -159,3 +157,19 @@ writing...progress
 This experiment can run for a LONG period of time, so you will probably want to kill it with ctrl+c.
 
 Sferes2 creates a new folder for execution of the experiments. For instance, in the example above, the folder `2019-04-04_12_05_39_207` contains all the file produced during the experiment. These files are precious are they are the experimental data that you will use to analyse the performance of the algorithms. You will have to extract these file from the Docker container. This can be done by copying them in your experiment's folder. (NOTE: this currently does not work on the AIRL Computing server because of the NFS rights managements, can be solved my mounting a volume on the local hard drive).
+
+
+### Visualising the simulated environment
+
+For a cross-platform visualisation of the opengl environment, we use in combination xinit (Xdummy), x11vnc, and novnc, to setup a HTML5 viewer. 
+To start the visualisation server (VISU_server), simply type in the container’s terminal: 
+`visu_server.sh&’
+This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface at the address [http://localhost:6081/]   (the IP can be changed in the start_container.sh). 
+You can test the interface by going into the robot_dart folder and running one of the example:
+```
+cd robot_dart
+./build/tutorial
+```
+You should see on the viewer’s webpage the result of the physical simulation (in this example: a set of boxes and spheres falling on a robotic arm). 
+
+
