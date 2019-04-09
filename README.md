@@ -159,17 +159,19 @@ This experiment can run for a LONG period of time, so you will probably want to 
 Sferes2 creates a new folder for execution of the experiments. For instance, in the example above, the folder `2019-04-04_12_05_39_207` contains all the file produced during the experiment. These files are precious are they are the experimental data that you will use to analyse the performance of the algorithms. You will have to extract these file from the Docker container. This can be done by copying them in your experiment's folder. (NOTE: this currently does not work on the AIRL Computing server because of the NFS rights managements, can be solved my mounting a volume on the local hard drive).
 
 
-### Visualising the simulated environment
+# Enabling graphical interfaces 
 
-For a cross-platform visualisation of the opengl environment, we use in combination xinit (Xdummy), x11vnc, and novnc, to setup a HTML5 viewer. 
-To start the visualisation server (VISU_server), simply type in the container’s terminal: 
-`visu_server.sh&’
-This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface at the address [http://localhost:6081/](http://localhost:6081/) (the IP can be changed in the start_container.sh). 
+For a cross-platform visualisation of the opengl environment, we use in combination xinit (Xdummy), x11vnc, and novnc, to setup a HTML5 viewer that shows a direct stream of the container's graphical interface. 
+To start the visualisation server (VISU_server), simply type in the container’s terminal:
+```
+root@0dac1511ca98:/git# visu_server.sh&
+```
+This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface\
+ at the address [http://localhost:6081/](http://localhost:6081/) (the IP can be changed in the start_container.sh).
 You can test the interface by going into the robot_dart folder and running one of the example:
 ```
-cd robot_dart
-./build/tutorial
+root@0dac1511ca98:/git# cd robot_dart/
+root@0dac1511ca98:/git/robot_dart# ./build/tutorial
 ```
-You should see on the viewer’s webpage the result of the physical simulation (in this example: a set of boxes and spheres falling on a robotic arm). 
-
-
+You should see on the viewer’s webpage the result of the physical simulation (in this example: a set of boxes and spheres falling on a robotic arm).
+You can shutdown the visu_server by putting its process forward (`fg`) and killing it with a ctrl+c. 
