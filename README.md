@@ -176,3 +176,4 @@ root@0dac1511ca98:/git/robot_dart# ./build/tutorial
 ```
 You should see on the viewer’s webpage the result of the physical simulation (in this example: a set of boxes and spheres falling on a robotic arm).
 You can shutdown the visu_server by putting its process forward (`fg`) and killing it with a ctrl+c. 
+
