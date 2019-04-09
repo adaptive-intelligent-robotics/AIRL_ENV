@@ -63,7 +63,9 @@ airl_env  example_dart_exp
 ### Configuring and compiling Sferes2
 Sferes should be configured and compiled via the `./waf configure` and `./waf` commands. However, these commands will not conpile your experiments. To properly configure and compile your experiment you should tell waf to specifically consider them. For instance, to compile the example_dart_exp experiment:
 First log on the container with `./start_container.sh`, then go to the `sferes2` folder: `cd sferes2/`, from there, you can configure sferes with this command: 
-`./waf configure --exp example_dart_exp/ --dart /workspace --robot_dart /workspace`
+```
+./waf configure --exp example_dart_exp/ --dart /workspace --robot_dart /workspace
+```
 This command has three parts. First, `./waf configure` means that we want to configure the build process. Then, ` --exp example_dart_exp/` says that we want to include our experiment in the configuration process. This will load all the configuration options and files associated with this experiment. Lastly, `--dart /workspace --robot_dart /workspace` are two options (`--dart` and `--robot_dart`) which specify to waf where it can find the include and library files for the Dart and robot_dart libraries. On the Docker image, all the libraries are installed in the /workspace/ folder (this is designed to enable an easier exportation on a system where sudo rights are not available). 
 
 After running the configuration command you should obtain something like this:
@@ -166,8 +168,7 @@ To start the visualisation server (VISU_server), simply type in the container’
 ```
 root@0dac1511ca98:/git# visu_server.sh&
 ```
-This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface\
- at the address [http://localhost:6081/](http://localhost:6081/) (the IP can be changed in the start_container.sh).
+This command will start the different processes and the graphical interface can be seen on any modern web browser. If you are running the docker container locally, you can access to the interface at the address [http://localhost:6081/](http://localhost:6081/) (the IP can be changed in the start_container.sh).
 You can test the interface by going into the robot_dart folder and running one of the example:
 ```
 root@0dac1511ca98:/git# cd robot_dart/

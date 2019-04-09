@@ -24,6 +24,6 @@ if [ ! "$(docker ps -q -f name=^/$CONTAINERNAME)" ]; then
     if [ "$(docker ps -aq -f status=exited -f name=^/$CONTAINERNAME)" ]; then
         docker start -ai airl_env
     else
-	docker run --privileged --name=$CONTAINERNAME -p $NOVNC_IP:6080 -m 8GB -it $IMAGENAME
+	docker run --privileged --name=$CONTAINERNAME -p $NOVNC_IP:6080 -m 8GB -it  -v $LOCAL_EXP_PATH:/git/sferes2/exp  $IMAGENAME
     fi
 fi
