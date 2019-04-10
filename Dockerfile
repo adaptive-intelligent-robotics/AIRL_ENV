@@ -29,7 +29,7 @@ RUN git clone https://github.com/sferes2/sferes2.git && \
     git checkout a35890af6b818bdafafe0bcaf36457bfd286ca12 && \
     ./waf configure && \
     ./waf build
-RUN sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./sferes2/wscript
+
 
 FROM install_sferes2 as install_dart
 RUN apt-get update && apt-get install -y \
@@ -57,7 +57,7 @@ RUN git clone git://github.com/dartsim/dart.git && \
     git checkout release-7.0 && \
     mkdir build
 RUN cd ./dart/build && \
-    cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace .. && \
+    cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace .. && \
     make -j6 install
 RUN rm -rf ./dart
 ENV LD_LIBRARY_PATH /workspace/lib:/usr/libx86_64-linux-gnu
@@ -67,6 +67,7 @@ FROM install_dart as install_robot_dart
 WORKDIR /git
 RUN git clone https://github.com/resibots/robot_dart.git && \
     cd robot_dart && git checkout multi_robot && \
+    sed -i 's/-O3 -march=native -g -faligned-new/-O3 -g '/g ./wscript &&\
     ./waf configure --prefix /workspace --dart /workspace && \
     ./waf && \
     ./waf install
