@@ -1,5 +1,5 @@
 LOCAL_EXP_PATH=~/'git'
-IMAGENAME='aneoshun/airl_env:airl_visu'
+IMAGENAME='aneoshun/airl_env:latest'
 CONTAINERNAME='airl_env'
 NOVNC_IP=6081
 
