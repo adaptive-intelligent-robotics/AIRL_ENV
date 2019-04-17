@@ -35,7 +35,7 @@ A `start_container.sh` is provided in this repository, which provides an easy wa
 The name of the image (and its tag) can be changed at the beginning of the script. 
 
 Additionally, if using Cygwin or MINGW on Windows it may be needed to:
-- escape $LOCAL_EXP_PATH passed in docker run arguments with a single forward slash `/` to bind mount correctly,
+- escape $LOCAL_EXP_PATH passed in `docker run` arguments with a single forward slash `/` to bind mount correctly,
 - prefix docker commands with `winpty` to run.
 
 Having considered everything, to launch the container, simply run `./start_container.sh`, which should directly give you access to a terminal prompt like this: 
