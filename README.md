@@ -31,7 +31,11 @@ aneoshun/airl_env   latest              5b47d0ae7998        15 minutes ago      
 ## Start a docker container from the docker image
 Now that the image has been downloaded, we can start to use it. 
 A `start_container.sh` is provided in this repository, which provides an easy way to start a container from the AIRL_env image. This script first checks if a container using the AIRL_env has already been created and use this one, or otherwise creates one. 
-
+```
+If using Cygwin or MINGW on Windows:
+- it may be needed to escape $LOCAL_EXP_PATH passed in docker run arguments with a single backslash to bind mount correctly
+- docker commands may have to be prefixed with winpty to run
+```
 The name of the image (and its tag) can be changed at the beginning of the script. 
 
 So, to launch the container, simply run `./start_container.sh`, which should directly give you access to a terminal prompt like this: 
@@ -158,7 +162,7 @@ writing...progress
 ```
 This experiment can run for a LONG period of time, so you will probably want to kill it with ctrl+c.
 
-Sferes2 creates a new folder for execution of the experiments. For instance, in the example above, the folder `2019-04-04_12_05_39_207` contains all the file produced during the experiment. These files are precious are they are the experimental data that you will use to analyse the performance of the algorithms. You will have to extract these file from the Docker container. This can be done by copying them in your experiment's folder. (NOTE: this currently does not work on the AIRL Computing server because of the NFS rights managements, can be solved my mounting a volume on the local hard drive).
+Sferes2 creates a new folder for execution of the experiments. For instance, in the example above, the folder `2019-04-04_12_05_39_207` contains all the file produced during the experiment. These files are precious and they are the experimental data that you will use to analyse the performance of the algorithms. You will have to extract these file from the Docker container. This can be done by copying them in your experiment's folder. (NOTE: this currently does not work on the AIRL Computing server because of the NFS rights managements, can be solved my mounting a volume on the local hard drive).
 
 
 # Enabling graphical interfaces 
