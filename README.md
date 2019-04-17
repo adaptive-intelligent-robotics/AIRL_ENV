@@ -38,7 +38,7 @@ Additionally, if using Cygwin or MINGW on Windows it may be needed to:
 - escape $LOCAL_EXP_PATH passed in docker run arguments with a single forward slash to bind mount correctly,
 - prefix docker commands with winpty to run.
 
-So, to launch the container, simply run `./start_container.sh`, which should directly give you access to a terminal prompt like this: 
+Having considered everything, to launch the container, simply run `./start_container.sh`, which should directly give you access to a terminal prompt like this: 
 `root@0dac1511ca98:/git# ` 
 
 You are inside the virtual environment of the Docker container. You can do most of the things you will normally do in the ubuntu terminal (cd, ls, etc..). You can quit it with `exit` or ctrl+c. If you want to re-join the container, simply run again `./start_container.sh`
