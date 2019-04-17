@@ -31,12 +31,12 @@ aneoshun/airl_env   latest              5b47d0ae7998        15 minutes ago      
 ## Start a docker container from the docker image
 Now that the image has been downloaded, we can start to use it. 
 A `start_container.sh` is provided in this repository, which provides an easy way to start a container from the AIRL_env image. This script first checks if a container using the AIRL_env has already been created and use this one, or otherwise creates one. 
-```
-If using Cygwin or MINGW on Windows:
-- it may be needed to escape $LOCAL_EXP_PATH passed in docker run arguments with a single backslash to bind mount correctly
-- docker commands may have to be prefixed with winpty to run
-```
+
 The name of the image (and its tag) can be changed at the beginning of the script. 
+
+Additionally, if using Cygwin or MINGW on Windows it may be needed to:
+- escape $LOCAL_EXP_PATH passed in docker run arguments with a single backslash to bind mount correctly,
+- prefix docker commands with winpty to run.
 
 So, to launch the container, simply run `./start_container.sh`, which should directly give you access to a terminal prompt like this: 
 `root@0dac1511ca98:/git# ` 
