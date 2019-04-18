@@ -184,6 +184,6 @@ You can shutdown the visu_server by putting its process forward (`fg`) and killi
 
 When you run some long-lasting experiments, it might be useful to know how to properly detach the container and re-attach it. 
 
-To detach from within the container simply press 'ctrl+p' and then 'ctrl+q'. The container is now running in backgroup and doing 'docker ps' should display it. 
-You can re-attach the container with 'docker attach XXXX' where XXX is the name (or ID) of the container
+To detach from within the container simply press `ctrl+p` and then `ctrl+q`. The container is now running in backgroup and doing `docker ps` should display it. 
+You can re-attach the container with `docker attach XXXX` where XXX is the name (or ID) of the container
 
