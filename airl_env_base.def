@@ -7,9 +7,9 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
 
 %environment
-export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
-export DISPLAY=:0
-export PATH="/workspace/bin:$PATH"
+	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+        export DISPLAY=:0
+        export PATH="/workspace/bin:$PATH"
 
 %files
 	resources/etc /workspace/tmp/etc
@@ -57,6 +57,7 @@ export PATH="/workspace/bin:$PATH"
 	libtinyxml2-dev \
 	liburdfdom-dev \
 	openscenegraph-3.6-dev \
+	vim \
 	emacs
 
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -88,28 +89,31 @@ export PATH="/workspace/bin:$PATH"
 	cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
 	make -j8 install
 
+	## INSTALLING HEXAPOD_COMMON
+	cd /git
+	git clone https://github.com/resibots/hexapod_common.git
+	cd hexapod_common/hexapod_controller
+	./waf configure --prefix /workspace
+	./waf install
+
+
 	## INSTALLING ROBOT_DART
 	cd /git
 	git clone https://github.com/resibots/robot_dart.git
 	cd robot_dart
 	git checkout camera_fix_thread
-	#sed -i 's/-O3 -march=native -g -faligned-new/-O3 -g '/g ./wscript
-	./waf configure --prefix /workspace --dart /workspace
+	./waf configure --prefix /workspace --dart /workspace --shared --controller /workspace
 	./waf
 	./waf install
+	./build/hexapod_plain
 
-	## INSTALLING HEXAPOD_COMMON
-	cd /git
-	git clone https://github.com/resibots/hexapod_common.git
-	cd hexapod_common/hexapod_controller
-	./waf configure
-	./waf install
 
 	## INSTALLING SFERES2
 	cd /git
 	git clone https://github.com/sferes2/sferes2.git
 	cd sferes2
 	git checkout qd
+	sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
 	./waf configure --kdtree /workspace/include
 	./waf build
 
@@ -140,6 +144,12 @@ export PATH="/workspace/bin:$PATH"
 	./build/arm
 	ps
 	kill $pid
+
+
+%test
+export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+cd /git/robot_dart/
+./build/hexapod_plain
 
 
 %help

@@ -126,7 +126,8 @@ From: ./airl_env_base.simg
 
     	rm -rf /var/lib/apt/lists/*
     
-	# Careful, the version of Protobuf should match the version used by bazel    
+	# Careful, the version of Protobuf should match the version used by bazel
+	cd /git
     	git clone https://github.com/google/protobuf
     	cd protobuf 
     	git checkout v3.6.1
