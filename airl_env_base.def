@@ -86,7 +86,8 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	git checkout release-7.0
 	mkdir build
 	cd build
-	cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	#cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
 	make -j8 install
 
 	## INSTALLING HEXAPOD_COMMON
@@ -113,7 +114,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	git clone https://github.com/sferes2/sferes2.git
 	cd sferes2
 	git checkout qd
-	sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
+	#sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
 	./waf configure --kdtree /workspace/include
 	./waf build
 
