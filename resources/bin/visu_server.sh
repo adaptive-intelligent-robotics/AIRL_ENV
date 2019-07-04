@@ -27,7 +27,7 @@ trap "cleanup" TERM QUIT INT EXIT
 echo "Starting services for VISU_server"
 
 echo "Starting Xinit (xdummy)"
-xinit -- :0 -nolisten tcp vt$XDG_VTNR -noreset +extension GLX +extension RANDR +extension RENDER +extension XFIXES &> /tmp/xinit.log &
+xinit -- :0 -nolisten tcp vt$XDG_VTNR -noreset +extension GLX +extension RANDR +extension RENDER +extension XFIXES &> /opt/xinit.log &
 xinit_pid="$!"
 sleep 0.1
 if ! ps -p ${xinit_pid} >/dev/null; then
@@ -37,7 +37,7 @@ if ! ps -p ${xinit_pid} >/dev/null; then
 fi
 
 echo "Starting X11vnc"
-x11vnc -display :0 -forever -shared -nopw  &> /tmp/x11vnc.log &
+x11vnc -display :0 -forever -shared -nopw  &> /opt/x11vnc.log &
 x11vnc_pid="$!"
 sleep 0.1
 if ! ps -p ${x11vnc_pid} >/dev/null; then
@@ -49,7 +49,7 @@ fi
 
 echo "Starting novnc"
 cd /opt/noVNC
-bash -c "./utils/launch.sh "  &> /tmp/novnc.log &
+bash -c "./utils/launch.sh "  &> /opt/novnc.log &
 novnc_pid="$!"
 cd - &>/dev/null
 sleep 0.1
