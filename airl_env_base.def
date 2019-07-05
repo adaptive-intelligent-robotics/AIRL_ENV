@@ -20,11 +20,11 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
 	## INSTALLING DEPENDENCIES
 	apt-get update
-	apt-get install -y software-properties-common
+	apt-get install --no-install-recommends -y software-properties-common
 	add-apt-repository -y ppa:openmw/staging
 	apt-get update
 
-	apt-get install -y \
+	apt-get install --no-install-recommends -y \
 	libboost-dev \
 	libboost-test-dev \
 	libboost-filesystem-dev \
@@ -60,7 +60,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	vim \
 	emacs
 
-	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
 	libgl1-mesa-dri \
 	net-tools \
 	openbox \

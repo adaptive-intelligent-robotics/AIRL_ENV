@@ -107,7 +107,7 @@ From: ./airl_env_base.simg
     	LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
     	tensorflow/tools/ci_build/builds/configured GPU \
     	bazel build -c opt --local_resources=20000,40,1.0 --config=opt --config=cuda \
-    	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1" //tensorflow:libtensorflow_cc.so
+    	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1" //tensorflow:libtensorflow_cc.so //tensorflow:libtensorflow_framework.so
     
 	mkdir -p                /workspace/include/google/tensorflow 
     	cp -r bazel-genfiles/*  /workspace/include/google/tensorflow/
@@ -117,7 +117,7 @@ From: ./airl_env_base.simg
     	#cp bazel-bin/tensorflow/libtensorflow_cc.so /workspace/lib 
     	#cp bazel-bin/tensorflow/libtensorflow_framework.so /workspace/lib
 	cp bazel-bin/tensorflow/lib*.so /workspace/lib
-    	rm -rf /root/.cache 
+	rm -rf /root/.cache 
     	rm -rf /git/tensorflow 
 
     	apt-get update && apt-get install -y --no-install-recommends \
@@ -130,7 +130,7 @@ From: ./airl_env_base.simg
 	cd /git
     	git clone https://github.com/google/protobuf
     	cd protobuf 
-    	git checkout v3.6.1
+    	git checkout v3.7.0
     	git submodule update --init --recursive
     	./autogen.sh
     	./configure --prefix=/workspace
@@ -147,8 +147,11 @@ From: ./airl_env_base.simg
     	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
     	make -j64
     	cp -r ../absl /workspace/include/
-    	find   /workspace/include/absl -type f  ! -name "*.h" -delete 
-    	cd && rm -rf /git/absl
+    	find   /workspace/include/absl -type f  -name "*.cc" -delete 
+    	cd && rm -rf /git/absl-cpp
+
+	rm -rf /git/dart
+	rm -rf /git/robot_dart
 
 %runscript
 
