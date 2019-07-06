@@ -91,7 +91,7 @@ From: ./airl_env_base.simg
 
     	LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
     	tensorflow/tools/ci_build/builds/configured GPU \
-    	bazel build -c opt --local_resources=20000,40,1.0 --config=opt --config=cuda \
+    	bazel build -c opt --local_resources=20000,40,1.0 --copt=-mavx --config=cuda \
     	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1" \
     	tensorflow/tools/pip_package:build_pip_package
     
@@ -106,7 +106,7 @@ From: ./airl_env_base.simg
 
     	LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
     	tensorflow/tools/ci_build/builds/configured GPU \
-    	bazel build -c opt --local_resources=20000,40,1.0 --config=opt --config=cuda \
+    	bazel build -c opt --local_resources=20000,40,1.0 --copt=-mavx --config=cuda \
     	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1" //tensorflow:libtensorflow_cc.so //tensorflow:libtensorflow_framework.so
     
 	mkdir -p                /workspace/include/google/tensorflow 
