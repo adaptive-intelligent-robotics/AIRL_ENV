@@ -1,0 +1,157 @@
+Bootstrap: docker
+From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
+
+%labels
+    Author a.cully@imperial.ac.uk
+    Version v0.0.1
+
+
+%environment
+	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+        export DISPLAY=:0
+        export PATH="/workspace/bin:$PATH"
+
+%files
+	resources/etc /workspace/tmp/etc
+	resources/bin /workspace/bin
+	resources/ssrc /workspace/include/ssrc
+
+%post
+	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+	## INSTALLING DEPENDENCIES
+	apt-get update
+	apt-get install --no-install-recommends -y software-properties-common
+	add-apt-repository -y ppa:openmw/staging
+	apt-get update
+
+	apt-get install --no-install-recommends -y \
+	libboost-dev \
+	libboost-test-dev \
+	libboost-filesystem-dev \
+	libboost-program-options-dev \
+	libboost-graph-parallel-dev \
+	libboost-thread-dev \
+	libboost-regex-dev \
+	python \
+	g++ \
+	libeigen3-dev \
+	python-simplejson \
+	libboost-mpi-dev \
+	openmpi-common \
+	openmpi-bin \
+	libgoogle-perftools-dev \
+	git \
+	wget \
+	libtbb-dev \
+	build-essential \
+	cmake \
+	pkg-config \
+	libassimp-dev \
+	libccd-dev \
+	libfcl-dev \
+	libxi-dev \
+	libxmu-dev \
+	freeglut3-dev \
+	libbullet-dev \
+	libode-dev \
+	libtinyxml2-dev \
+	liburdfdom-dev \
+	openscenegraph-3.6-dev \
+	vim \
+	emacs
+
+	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+	libgl1-mesa-dri \
+	net-tools \
+	openbox \
+	sudo \
+	tint2 \
+	x11-xserver-utils \
+	x11vnc \
+	xinit \
+	xserver-xorg-video-dummy \
+	xserver-xorg-input-void \
+	websockify
+
+	rm -rf /var/lib/apt/lists/*
+	rm -f /usr/share/applications/x11vnc.desktop
+
+
+	mkdir /git
+
+	## INSTALLING DART
+	cd /git
+	git clone git://github.com/dartsim/dart.git
+	cd dart
+	git checkout release-7.0
+	mkdir build
+	cd build
+	#cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	make -j8 install
+
+	## INSTALLING HEXAPOD_COMMON
+	cd /git
+	git clone https://github.com/resibots/hexapod_common.git
+	cd hexapod_common/hexapod_controller
+	./waf configure --prefix /workspace
+	./waf install
+
+
+	## INSTALLING ROBOT_DART
+	cd /git
+	git clone https://github.com/resibots/robot_dart.git
+	cd robot_dart
+	git checkout camera_fix_thread
+	./waf configure --prefix /workspace --dart /workspace --shared --controller /workspace
+	./waf
+	./waf install
+	./build/hexapod_plain
+
+
+	## INSTALLING SFERES2
+	cd /git
+	git clone https://github.com/sferes2/sferes2.git
+	cd sferes2
+	git checkout qd
+	#sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
+	./waf configure --kdtree /workspace/include
+	./waf build
+
+	## INSTALLING VISU_SERVER
+	cd /git
+	#useradd -m -s /bin/bash user
+	#su user
+	#cp /etc/skel/.xinitrc /home/user/
+	#exit
+	#echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
+	mv /workspace/tmp/etc/X11/* /etc/X11/
+	mv /workspace/tmp/etc/skel/.xinitrc /etc/skel/
+	mv /workspace/tmp/etc/xdg/openbox/* /etc/xdg/openbox/
+	
+	rm -r /workspace/tmp
+	git clone https://github.com/kanaka/noVNC.git /opt/noVNC
+	cd /opt/noVNC
+	ln -s vnc_lite.html index.html
+	
+	
+
+%runscript
+	cd /git/robot_dart/
+	visu_server.sh &
+	pid=$!
+	ps
+	echo $pid
+	./build/arm
+	ps
+	kill $pid
+
+
+%test
+export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+cd /git/robot_dart/
+./build/hexapod_plain
+
+
+%help
+This container contains all the libraries and tools usually used in the Adaptive and Intelligent Robotics Lab. 
