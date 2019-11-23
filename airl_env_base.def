@@ -17,14 +17,14 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	resources/ssrc /workspace/include/ssrc
 
 %post
-	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
 	## INSTALLING DEPENDENCIES
 	apt-get update
 	apt-get install --no-install-recommends -y software-properties-common
 	add-apt-repository -y ppa:openmw/staging
 	apt-get update
 
-	apt-get install --no-install-recommends -y \
+ 	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
 	libboost-dev \
 	libboost-test-dev \
 	libboost-filesystem-dev \
@@ -32,10 +32,11 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	libboost-graph-parallel-dev \
 	libboost-thread-dev \
 	libboost-regex-dev \
-	python \
+	python3.6 \
 	g++ \
 	libeigen3-dev \
-	python-simplejson \
+	python3-simplejson \
+	python3-setuptools \
 	libboost-mpi-dev \
 	openmpi-common \
 	openmpi-bin \
@@ -56,11 +57,10 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	libode-dev \
 	libtinyxml2-dev \
 	liburdfdom-dev \
-	openscenegraph-3.6-dev \
-	vim \
-	emacs
-
-	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+	libglfw3-dev \
+	libopenal-dev \
+	libjpeg-dev \
+	libpng-dev \
 	libgl1-mesa-dri \
 	net-tools \
 	openbox \
@@ -71,11 +71,12 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	xinit \
 	xserver-xorg-video-dummy \
 	xserver-xorg-input-void \
-	websockify
+	xterm \
+	less \
+	vim \
+	emacs
 
-	rm -rf /var/lib/apt/lists/*
-	rm -f /usr/share/applications/x11vnc.desktop
-
+	ln -s /usr/bin/python3 /usr/bin/python
 
 	mkdir /git
 
@@ -83,12 +84,20 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	cd /git
 	git clone git://github.com/dartsim/dart.git
 	cd dart
-	git checkout release-7.0
+	git checkout release-6.9
 	mkdir build
 	cd build
-	#cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
-	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
-	make -j8 install
+	if [ -z "${MYOPT}" ]; then #if SINGULARITYENV_MYOPT="SIMD" singularity build ... is defined (regardless of the value), use the SIMD
+	  echo "NOT USING SIMD"
+	  cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..	
+	else
+	  echo "USING SIMD INSTRUCTIONS"
+	  cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	fi
+
+	
+
+	make -j install
 
 	## INSTALLING HEXAPOD_COMMON
 	cd /git
@@ -98,43 +107,91 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	./waf install
 
 
+	## Installing Magnum
+	# installation of Corrade
+	cd  /git
+	git clone https://github.com/mosra/corrade.git
+	cd corrade
+	mkdir build && cd build
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..
+	make -j
+	make install
+	
+	# installation of Magnum
+	cd /git
+	git clone https://github.com/mosra/magnum.git
+	cd magnum
+	mkdir build && cd build
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DWITH_AUDIO=ON -DWITH_DEBUGTOOLS=ON -DWITH_GL=ON -DWITH_MESHTOOLS=ON -DWITH_PRIMITIVES=ON -DWITH_SCENEGRAPH=ON -DWITH_SHADERS=ON -DWITH_TEXT=ON -DWITH_TEXTURETOOLS=ON -DWITH_TRADE=ON -DWITH_GLFWAPPLICATION=ON -DWITH_WINDOWLESSGLXAPPLICATION=ON -DWITH_OPENGLTESTER=ON -DWITH_ANYAUDIOIMPORTER=ON -DWITH_ANYIMAGECONVERTER=ON -DWITH_ANYIMAGEIMPORTER=ON -DWITH_ANYSCENEIMPORTER=ON -DWITH_MAGNUMFONT=ON -DWITH_OBJIMPORTER=ON -DWITH_TGAIMPORTER=ON -DWITH_WAVAUDIOIMPORTER=ON .. 
+
+	make -j
+	make install
+
+	# installation of Magnum Plugins
+	cd /git
+	git clone https://github.com/mosra/magnum-plugins.git
+	cd magnum-plugins
+	mkdir build && cd build
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DWITH_ASSIMPIMPORTER=ON -DWITH_DDSIMPORTER=ON -DWITH_JPEGIMPORTER=ON -DWITH_OPENGEXIMPORTER=ON -DWITH_PNGIMPORTER=ON -DWITH_TINYGLTFIMPORTER=ON .. 
+	make -j
+	make install
+
+	# installation of Magnum DART Integration (DART needs to be installed)
+	cd /git
+	git clone https://github.com/mosra/magnum-integration.git
+	cd magnum-integration
+	mkdir build && cd build
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DWITH_DART=ON ..
+	make -j
+	make install
+
+	#removing previous folders
+	cd /git
+	rm -rf ./magnum-integration
+	rm -rf ./magnum-plugins
+	rm -rf ./magnum
+	rm -rf ./corrade
+
+
 	## INSTALLING ROBOT_DART
 	cd /git
 	git clone https://github.com/resibots/robot_dart.git
 	cd robot_dart
-	git checkout camera_fix_thread
-	./waf configure --prefix /workspace --dart /workspace --shared --controller /workspace
+	./waf configure --prefix /workspace --dart /workspace --shared --controller /workspace --magnum_install_dir  /workspace --magnum_integration_install_dir /workspace --magnum_plugins_install_dir /workspace --corrade_install_dir /workspace
 	./waf
 	./waf install
-	./build/hexapod_plain
-
-
+	
 	## INSTALLING SFERES2
 	cd /git
 	git clone https://github.com/sferes2/sferes2.git
 	cd sferes2
-	git checkout qd
+	git checkout qd_py3
 	#sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
 	./waf configure --kdtree /workspace/include
 	./waf build
 
 	## INSTALLING VISU_SERVER
+	
 	cd /git
-	#useradd -m -s /bin/bash user
-	#su user
-	#cp /etc/skel/.xinitrc /home/user/
-	#exit
-	#echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user
 	mv /workspace/tmp/etc/X11/* /etc/X11/
 	mv /workspace/tmp/etc/skel/.xinitrc /etc/skel/
 	mv /workspace/tmp/etc/xdg/openbox/* /etc/xdg/openbox/
 	
 	rm -r /workspace/tmp
+
+	git clone --branch v0.9.0 https://github.com/novnc/websockify.git /opt/websockify
+	cd /opt/websockify
+	python3 setup.py install
+
 	git clone https://github.com/kanaka/noVNC.git /opt/noVNC
 	cd /opt/noVNC
 	ln -s vnc_lite.html index.html
 	
-	
+
+	## Cleaning
+	rm -rf /var/lib/apt/lists/*
+	rm -f /usr/share/applications/x11vnc.desktop
+
 
 %runscript
 	cd /git/robot_dart/
@@ -148,9 +205,9 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
 
 %test
-export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
-cd /git/robot_dart/
-./build/hexapod_plain
+	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
+	cd /git/robot_dart/
+	./build/hexapod_plain
 
 
 %help
