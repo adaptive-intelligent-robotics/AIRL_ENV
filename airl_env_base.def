@@ -8,20 +8,20 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 
 %environment
 	export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
-        export DISPLAY=:0
         export PATH="/workspace/bin:$PATH"
 
 %files
 	resources/etc /workspace/tmp/etc
 	resources/bin /workspace/bin
 	resources/ssrc /workspace/include/ssrc
+	resources/.vnc /workspace/tmp/.vnc
+
 
 %post
         export LD_LIBRARY_PATH="/workspace/lib:$LD_LIBRARY_PATH"
 	## INSTALLING DEPENDENCIES
 	apt-get update
 	apt-get install --no-install-recommends -y software-properties-common
-	add-apt-repository -y ppa:openmw/staging
 	apt-get update
 
  	DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
@@ -62,15 +62,13 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	libjpeg-dev \
 	libpng-dev \
 	libgl1-mesa-dri \
+	libxtst6 \
+        libxv1 \
 	net-tools \
+	x11-xkb-utils \
+	xauth \
 	openbox \
 	sudo \
-	tint2 \
-	x11-xserver-utils \
-	x11vnc \
-	xinit \
-	xserver-xorg-video-dummy \
-	xserver-xorg-input-void \
 	xterm \
 	less \
 	vim \
@@ -173,10 +171,22 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	## INSTALLING VISU_SERVER
 	
 	cd /git
+
+	wget https://svwh.dl.sourceforge.net/project/turbovnc/2.2.3/turbovnc_2.2.3_amd64.deb
+        wget https://svwh.dl.sourceforge.net/project/libjpeg-turbo/2.0.3/libjpeg-turbo-official_2.0.3_amd64.deb
+        wget https://svwh.dl.sourceforge.net/project/virtualgl/2.6.3/virtualgl_2.6.3_amd64.deb
+        dpkg -i *.deb
+        rm -f /tmp/*.deb
+        sed -i 's/$host:/unix:/g' /opt/TurboVNC/bin/vncserver
+
+	
+	      
 	mv /workspace/tmp/etc/X11/* /etc/X11/
 	mv /workspace/tmp/etc/skel/.xinitrc /etc/skel/
 	mv /workspace/tmp/etc/xdg/openbox/* /etc/xdg/openbox/
-	
+	mv /workspace/tmp/etc/turbovncserver.conf /etc/turbovncserver.conf
+	mv /workspace/tmp/.vnc /opt/.vnc
+
 	rm -r /workspace/tmp
 
 	git clone --branch v0.9.0 https://github.com/novnc/websockify.git /opt/websockify
@@ -186,7 +196,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	git clone https://github.com/kanaka/noVNC.git /opt/noVNC
 	cd /opt/noVNC
 	ln -s vnc_lite.html index.html
-	
+
 
 	## Cleaning
 	rm -rf /var/lib/apt/lists/*

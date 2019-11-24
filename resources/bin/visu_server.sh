@@ -1,7 +1,6 @@
 #!/bin/bash
 
-xinit_pid=""
-x11vnc_pid=""
+turbovnc_pid=""
 novnc_pid=""
 
 cleanup() {
@@ -12,44 +11,38 @@ cleanup() {
         echo "Terminating novnc (${novnc_pid})"
         kill ${novnc_pid}
     fi
-    if [ -n "${x11vnc_pid}" ]; then
-        echo "Terminating x11vnc (${x11vnc_pid})"
-        kill ${x11vnc_pid}
-    fi
-    if [ -n "${xinit_pid}" ]; then
-        echo "Terminating xinit (${xinit_pid})"
-        pkill -15 Xorg
-	sleep 1
+    if [ -n "${turbovnc_pid}" ]; then
+        echo "Terminating turbovnc (${turbovnc_pid})"
+        #kill ${turbovnc_pid}
     fi
 }
 trap "cleanup" TERM QUIT INT EXIT
 
 echo "Starting services for VISU_server"
 
-echo "Starting Xinit (xdummy)"
-xinit -- :0 -nolisten tcp vt$XDG_VTNR -noreset +extension GLX +extension RANDR +extension RENDER +extension XFIXES &> /opt/xinit.log &
-xinit_pid="$!"
+
+echo "Starting TurboVNC"
+/opt/TurboVNC/bin/vncserver  &> /opt/turbovnc.log &
+turbovnc_pid="$!"
+echo $turbovnc_pid
 sleep 0.1
-if ! ps -p ${xinit_pid} >/dev/null; then
-    xinit_pid=
-    echo "Failed to start xinit (xdummy)"
+if ! ps -p ${turbovnc_pid} >/dev/null; then
+    turbovnc_pid=
+    echo "Failed to start turbovnc"
     exit 1
 fi
 
-echo "Starting X11vnc"
-x11vnc -display :0 -forever -shared -nopw  &> /opt/x11vnc.log &
-x11vnc_pid="$!"
-sleep 0.1
-if ! ps -p ${x11vnc_pid} >/dev/null; then
-    x11vnc_pid=
-    echo "Failed to start x11vnc"
-    exit 1
-fi
+sleep 1
+str=$(cat /opt/turbovnc.log |grep "display unix:" )
+value=${str#*"display unix:"}
+port_novnc=$((6080+$value))
+port_turbovnc=$((5900+$value))
+
 
 
 echo "Starting novnc"
 cd /opt/noVNC
-bash -c "./utils/launch.sh "  &> /opt/novnc.log &
+bash -c "./utils/launch.sh --listen $port_novnc --vnc localhost:$port_turbovnc "  &> /opt/novnc.log &
 novnc_pid="$!"
 cd - &>/dev/null
 sleep 0.1
@@ -58,6 +51,11 @@ if ! ps -p ${novnc_pid} >/dev/null; then
     echo "Failed to start noVNC"
     exit 1
 fi
+
+
+echo "Please do: export DISPLAY=\":$value\""
+echo "you can access the visualisation server at localhost:$port_novnc"
+
 
 wait
 
