@@ -1,4 +1,4 @@
 
 build_image:
   script:
-    - build_base.sh
+    - ./build_base.sh
