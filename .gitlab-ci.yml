@@ -1,4 +1,5 @@
+image: singularityware/singularity:gitlab-2.6
 
-build_image:
+build:
   script:
-    - ./build_base.sh
+     - /bin/bash ./build_base.sh
