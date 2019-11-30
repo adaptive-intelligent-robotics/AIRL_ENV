@@ -163,8 +163,14 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 	cd /git
 	git clone https://github.com/sferes2/sferes2.git
 	cd sferes2
-	git checkout qd_py3
-	#sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
+	git checkout qd
+	if [ -z "${MYOPT}" ]; then #if SINGULARITYENV_MYOPT="SIMD" singularity build ... is defined (regardless of the value), use the SIMD
+	  echo "NOT USING SIMD"
+	else
+	  echo "USING SIMD INSTRUCTIONS"
+	  sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript	
+	fi
+
 	./waf configure --kdtree /workspace/include
 	./waf build
 
