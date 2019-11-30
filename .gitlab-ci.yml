@@ -1,4 +1,11 @@
-image: singularityware/singularity:gitlab-2.6
+before_script:
+  - apt-get update -qq && apt-get install -y wget
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  - /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/conda
+  - export PATH=$HOME/conda/bin:$PATH
+  - $HOME/conda/bin/pip install sregistry[all]
+  - chmod u+x .gitlabci/*.sh
+  - /bin/bash .gitlabci/setup.sh
 
 build:
   script:
