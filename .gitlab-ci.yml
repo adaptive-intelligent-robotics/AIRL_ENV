@@ -1,6 +1,6 @@
 image: 
-  name: singularityware/singularity:v3.4.0
-  entrypoint: /bin/sh
+  name: "singularityware/singularity:v3.4.0"
+  entrypoint: "/bin/sh"
 
 build:
   script:
