@@ -1,5 +1,9 @@
 image: singularityware/singularity:v3.4.0
 
+before_script:
+  - /bin/bash .gitlabci/setup.sh
+
 build:
   script:
+     - echo "START BUILDING" 
      - /bin/bash build_base.sh
