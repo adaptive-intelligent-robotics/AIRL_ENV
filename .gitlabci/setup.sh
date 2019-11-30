@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-apt-get update && apt-get install -y wget git \
+sudo apt-get update && apt-get install -y wget git \
                                           build-essential \
                                           squashfs-tools \
                                           libtool \
