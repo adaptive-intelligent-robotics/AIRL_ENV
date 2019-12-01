@@ -6,4 +6,4 @@ before_script:
 build:
   script:
      - ls
-     - /bin/bash ./build_base.sh
+     - /bin/bash ./build_base.sh --nofakeroot
