@@ -12,7 +12,6 @@ from airl_building_blocks import *
 # generate a Singularity definition file
 hpccm.config.set_container_format('singularity')
 
-print test
 print(hpccm.primitives.baseimage(image='ubuntu:18.04',_docker_env=False))
 print(hpccm.primitives.label(metadata={'Author': 'a.cully@imperial.ac.uk', 'Version':'v0.2'}))
 
