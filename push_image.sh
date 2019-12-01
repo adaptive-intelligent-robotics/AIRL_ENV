@@ -146,9 +146,13 @@ if [ -f "${imagefile}" ]; then
             uri="${uri}:${tag}"
         fi
 	
-        echo "Pushing ${uri} to ${cli}://"
-        echo "SREGISTRY_CLIENT=${cli} sregistry push --name ${uri} ${imagefile}"
-        SREGISTRY_CLIENT="${cli}" sregistry --debug push --name "${uri}" "${imagefile}"
+        #echo "Pushing ${uri} to ${cli}://"
+        #echo "SREGISTRY_CLIENT=${cli} sregistry push --name ${uri} ${imagefile}"
+        #SREGISTRY_CLIENT="${cli}" sregistry --debug push --name "${uri}" "${imagefile}"
+	echo "login to remote"
+	singularity remote login --tokenfile ~/.singularity/sylabs-token
+	singularity --debug push --name "${uri}" "${imagefile}" 
+	
 	
     else
         echo "Skipping upload. Image $imagefile is finished!"

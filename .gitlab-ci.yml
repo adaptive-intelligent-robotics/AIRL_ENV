@@ -10,5 +10,6 @@ singularity-image:
      - source /sregistry_file
      - echo $SREGISTRY_FILE > ~/.sregistry
      - echo $SREGISTRY_FILE
+     - echo $SREGISTRY_TOKER > ~/.singularity/sylabs-token
      - /bin/bash ./push_image.sh --uri airl_lab/airl_env --tag CI --cli registry
        
