@@ -21,15 +21,16 @@ if [ "$nofakeroot" != true ]; then
 fi
 
 
-python3 airl_env_base.py > hppcm_airl_env_base.def
+python3 airl_env_base.py > airl_env_base.def
 ret=$?
 if [ $ret -ne 0 ]; then
     echo "Generation of the definition file failed."
     exit $ret
 fi
 
-cat hppcm_airl_env_base.def
+cat airl_env_base.def
 
-singularity build --notest $build_option hppcm_airl_env_base.sif hppcm_airl_env_base.def
+singularity build --notest $build_option airl_env_base.sif airl_env_base.def
+
 ret=$?
 exit $ret

@@ -7,3 +7,8 @@ build:
   script:
      - ls
      - /bin/bash ./build_base.sh --nofakeroot
+  artifacts:
+     paths:
+       - airl_env_base.sif
+       - airl_env_base.def
+       
