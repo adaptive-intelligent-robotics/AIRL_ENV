@@ -2,19 +2,13 @@ image: aneoshun/airl_build_env:latest
 
 stages:
   - build
-  - deploy
+  
 
 singularity-image:
   stage: build
   script:
      - /bin/bash ./build_base.sh --nofakeroot
-
-
-
-deploy:
-  stage: deploy
-  script:
-   - source /sregistry_file
-   - echo $SREGISTRY_FILE > ~/.sregistry
-   - /bin/bash ./push_image.sh --uri airl_lab/airl_env --tag CI --cli registry
+     - source /sregistry_file
+     - echo $SREGISTRY_FILE > ~/.sregistry
+     - /bin/bash ./push_image.sh --uri airl_lab/airl_env --tag CI --cli registry
        
