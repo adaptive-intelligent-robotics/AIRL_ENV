@@ -81,10 +81,10 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
         self.__commands.append("sed -i 's/$host:/unix:/g' /opt/TurboVNC/bin/vncserver")
 
         self.__commands.append('mv /tmp/visu_server/etc/X11 /etc/X11')
-	self.__commands.append('mv /tmp/visu_server/etc/skel/.xinitrc /etc/skel/')
-	self.__commands.append('mv /tmp/visu_server/etc/xdg/openbox /etc/xdg/openbox')
-	self.__commands.append('mv /tmp/visu_server/etc/turbovncserver.conf /etc/turbovncserver.conf')
-	self.__commands.append('mv /tmp/visu_server/.vnc /opt/.vnc')
+        self.__commands.append('mv /tmp/visu_server/etc/skel/.xinitrc /etc/skel/')
+        self.__commands.append('mv /tmp/visu_server/etc/xdg/openbox /etc/xdg/openbox')
+        self.__commands.append('mv /tmp/visu_server/etc/turbovncserver.conf /etc/turbovncserver.conf')
+        self.__commands.append('mv /tmp/visu_server/.vnc /opt/.vnc')
         self.__commands.append('mkdir -p '+self.__workspace+'/bin')
         self.__commands.append('mv /tmp/visu_server/bin/visu_server.sh '+self.__workspace+'/bin')
 

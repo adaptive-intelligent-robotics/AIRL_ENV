@@ -70,8 +70,8 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         # Clone source
         self.__commands.append(self.clone_step(branch='release-6.9',
-            repository='git://github.com/dartsim/dart.git',
-            path=self.__wd, directory='dart'))
+                                               repository='git://github.com/dartsim/dart.git',
+                                               path=self.__wd, directory='dart'))
 
         # Configure and Install
         self.__commands.append('mkdir /git/dart/build')
@@ -84,5 +84,4 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
 
         # Cleanup directory
-	self.__commands.append(self.cleanup_step(
-                   [posixpath.join(self.__wd, 'dart')]))
+        self.__commands.append( self.cleanup_step([ posixpath.join(self.__wd, 'dart') ] ))

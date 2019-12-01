@@ -6,7 +6,6 @@ from __future__ import print_function
 
 import hpccm.config
 import hpccm.templates.git
-
 from hpccm.building_blocks.base import bb_base
 from hpccm.primitives.comment import comment
 from hpccm.primitives.workdir import workdir
@@ -57,7 +56,7 @@ class sferes(bb_base, hpccm.templates.git):
         self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
         self += shell(commands=self.__commands)
         self += shell(commands=self.__tests, _test=True)
-	self += comment('====DONE SFERES====')
+        self += comment('====DONE SFERES====')
 
 
     def __setup(self):
