@@ -1,6 +1,4 @@
-image:
-  name: airl_build_env
-  pull: never # available: always, if-not-present, never
+image: aneoshun/airl_build_env:latest
 
 build:
   script:
