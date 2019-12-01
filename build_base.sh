@@ -31,5 +31,5 @@ fi
 cat hppcm_airl_env_base.def
 
 singularity build --notest $build_option hppcm_airl_env_base.sif hppcm_airl_env_base.def
-
-exit 0
+ret=$?
+exit $ret
