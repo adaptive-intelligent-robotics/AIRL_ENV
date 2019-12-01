@@ -11,5 +11,4 @@ singularity-image:
      - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry; else echo "NOT on master branch, not pushing"; fi; 
   artifacts:
     paths:
-    - airl_env_base.def
-       
+       - airl_env_base.def
