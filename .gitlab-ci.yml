@@ -8,9 +8,7 @@ singularity-image:
   stage: build
   script:
      - /bin/bash ./build_base.sh --nofakeroot
-  artifacts:
-    paths:
-     - airl_env_base.sif
+
 
 
 deploy:
