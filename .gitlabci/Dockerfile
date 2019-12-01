@@ -18,7 +18,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 	
 RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py
 
-
+# fix "mesg: ttyname failed: Inappropriate ioctl for device" warning
+RUN cp /etc/profile /root/.profile
 
 #RUN sed -i -e 's/^Defaults\tsecure_path.*$//' /etc/sudoers
 
@@ -49,4 +50,5 @@ RUN cd /tmp && \
     make -C builddir install
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
+CMD ["/bin/bash", "-l", "-c"]
 
