@@ -1,6 +1,6 @@
 AIRL_environment
 ============
-
+[![pipeline status](https://gitlab.doc.ic.ac.uk/AIRL/airl_env/badges/master/pipeline.svg)](https://gitlab.doc.ic.ac.uk/AIRL/airl_env/commits/master)
 
 
 # The AIRL_env containers
