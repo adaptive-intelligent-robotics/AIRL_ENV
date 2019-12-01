@@ -148,7 +148,7 @@ if [ -f "${imagefile}" ]; then
 	
         echo "Pushing ${uri} to ${cli}://"
         echo "SREGISTRY_CLIENT=${cli} sregistry push --name ${uri} ${imagefile}"
-        SREGISTRY_CLIENT="${cli}" sregistry push --name "${uri}" "${imagefile}"
+        SREGISTRY_CLIENT="${cli}" sregistry --debug push --name "${uri}" "${imagefile}"
 	
     else
         echo "Skipping upload. Image $imagefile is finished!"
