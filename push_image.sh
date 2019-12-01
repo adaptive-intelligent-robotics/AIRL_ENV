@@ -151,7 +151,7 @@ if [ -f "${imagefile}" ]; then
         #SREGISTRY_CLIENT="${cli}" sregistry --debug push --name "${uri}" "${imagefile}"
 	echo "login to remote"
 	singularity remote login --tokenfile ~/.singularity/sylabs-token
-	singularity push "${imagefile}" "${uri}" 
+	singularity push  -U "${imagefile}" "${uri}" 
 	
 	
     else
