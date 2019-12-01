@@ -157,7 +157,7 @@ if [ -f "${imagefile}" ]; then
 	
 	echo "Login to remote"
 	singularity remote login --tokenfile $SREGISTRY_TOKEN
-	singularity push  -U "${imagefile}" "${uri}" 
+	singularity push "${imagefile}" "${uri}" 
 	
 	
     else
