@@ -1,5 +1,8 @@
 image: aneoshun/airl_build_env:latest
 
+before_script:
+  - /bin/bash -c "echo before script"
+
 build:
   script:
      - /bin/bash -c "echo test-singularity-build"
