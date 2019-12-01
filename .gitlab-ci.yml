@@ -1,7 +1,8 @@
 image: aneoshun/airl_build_env:latest
 
+
 build:
   script:
-    -  bash -c "echo test-singularity-build"
-
+    - bash -c "echo test-singularity-build"
+    - bash ./build_base.sh
 
