@@ -1,14 +1,22 @@
 image: aneoshun/airl_build_env:latest
 
-before_script:
-  - /bin/bash -c "echo before script"
+stages:
+  - build
+  - deploy
 
-build:
+singularity-image:
+  stage: build
   script:
-     - ls
      - /bin/bash ./build_base.sh --nofakeroot
   artifacts:
-     paths:
-       - airl_env_base.sif
-       - airl_env_base.def
+    paths:
+     - airl_env_base.sif
+
+
+deploy:
+  stage: deploy
+  script:
+   - source /sregistry_file
+   - echo $SREGISTRY_FILE > ~/.sregistry
+   - /bin/bash ./push_image.sh --uri airl_lab/airl_env --tag CI --cli registry
        

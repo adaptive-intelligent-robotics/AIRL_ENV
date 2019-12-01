@@ -53,5 +53,7 @@ RUN cd /tmp && \
 RUN echo "root:100000:65536" >> /etc/subuid && \
     echo "root:100000:65536" >> /etc/subgid
 
+ADD ./sregistry_file /sregistry_file
+
 CMD ["/bin/bash", "-c"]
 

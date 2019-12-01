@@ -1,0 +1,1 @@
+export SREGISTRY_FILE='{ "registry": { "token": "'$SREGISTRY_TOKEN'", "username": "'$SREGISTRY_USERNAME'", "base": "'$SREGISTRY_HOSTNAME'" } }'
