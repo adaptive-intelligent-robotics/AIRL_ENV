@@ -156,7 +156,7 @@ if [ -f "${imagefile}" ]; then
 	singularity sign "${imagefile}"
 	
 	echo "Login to remote"
-	singularity remote login --tokenfile ~/.singularity/sylabs-token
+	singularity remote login --tokenfile $SREGISTRY_TOKEN
 	singularity push  -U "${imagefile}" "${uri}" 
 	
 	
