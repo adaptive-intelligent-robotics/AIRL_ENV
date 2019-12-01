@@ -13,6 +13,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     pkg-config \
     ca-certificates \
     cryptsetup-bin \
+    uidmap \
     git &&\
     ln -s /usr/bin/python3 /usr/bin/python
 	
@@ -48,6 +49,9 @@ RUN cd /tmp && \
     ./mconfig && \
     make -C builddir && \
     make -C builddir install
+
+RUN echo "root:100000:65536" >> /etc/subuid && \
+    echo "root:100000:65536" >> /etc/subgid
 
 CMD ["/bin/bash", "-c"]
 
