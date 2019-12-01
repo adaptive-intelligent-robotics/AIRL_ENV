@@ -8,9 +8,6 @@ singularity-image:
   script:
      - /bin/bash ./build_base.sh --nofakeroot
      - source /sregistry_file
-     - echo $SREGISTRY_FILE > ~/.sregistry
-     - echo $SREGISTRY_FILE
      - echo $SREGISTRY_TOKEN > ~/.singularity/sylabs-token
-     - cat ~/.singularity/sylabs-token
      - /bin/bash ./push_image.sh --uri airl_lab/airl_env --tag CI --cli registry
        
