@@ -6,6 +6,7 @@ stages:
 singularity-image:
   stage: build
   script:
-     - /bin/bash ./build_base.sh --nofakeroot
-     - /bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry
+     - echo $CI_COMMIT_REF_NAME
+     - #/bin/bash ./build_base.sh --nofakeroot
+     - #/bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry
        
