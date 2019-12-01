@@ -23,10 +23,10 @@ print(hpccm.building_blocks.gnu())
 
 print(hpccm.building_blocks.packages(ospackages=['emacs','vim','less']))
 
-#print(hexapod_common())
-#print(robot_dart())
-#print(sferes())
-#print(visu_server())
+print(hexapod_common())
+print(robot_dart())
+print(sferes())
+print(visu_server())
 
 
 
