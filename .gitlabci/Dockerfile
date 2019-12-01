@@ -48,5 +48,5 @@ RUN cd /tmp && \
     make -C builddir && \
     make -C builddir install
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
 
