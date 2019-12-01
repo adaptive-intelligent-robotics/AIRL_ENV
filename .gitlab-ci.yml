@@ -6,7 +6,7 @@ stages:
 singularity-image:
   stage: build
   script:
-     - echo $CI_COMMIT_REF_NAME
+     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry; else echo "NOT on master branch, not pushing"; fi; 
      - exit 1 #/bin/bash ./build_base.sh --nofakeroot
      - exit 1 #/bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry
        
