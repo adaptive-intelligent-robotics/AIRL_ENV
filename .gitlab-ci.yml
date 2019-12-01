@@ -9,5 +9,5 @@ singularity-image:
      - /bin/bash ./build_base.sh --nofakeroot
      - source /sregistry_file
      - echo $SREGISTRY_TOKEN > ~/.singularity/sylabs-token
-     - /bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag CI --cli registry
+     - /bin/bash ./push_image.sh --uri library://airl_lab/default/airl_env --tag baseci --cli registry
        
