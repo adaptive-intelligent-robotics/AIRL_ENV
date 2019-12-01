@@ -1,6 +1,4 @@
-image: 
-  name: "singularityware/singularity:v3.4.0"
-  entrypoint: ["/bin/sh"]
+image: airl_build_env
 
 build:
   script:
