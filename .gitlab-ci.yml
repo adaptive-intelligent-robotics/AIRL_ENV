@@ -5,4 +5,5 @@ before_script:
 
 build:
   script:
-     - /bin/bash -c "echo test-singularity-build"
+     - ls
+     - /bin/bash ./build_base.sh
