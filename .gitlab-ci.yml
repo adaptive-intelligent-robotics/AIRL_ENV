@@ -2,7 +2,7 @@ image: aneoshun/airl_build_env:latest
 
 stages:
   - build
-
+  
 singularity-image:
   stage: build
   script:

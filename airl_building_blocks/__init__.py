@@ -5,4 +5,5 @@ from .dart import dart
 from .magnum import magnum
 from .sferes import sferes
 from .visu_server import visu_server
+from .tensorflow import tensorflow
 
