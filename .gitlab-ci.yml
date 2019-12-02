@@ -2,6 +2,7 @@ image: aneoshun/airl_build_env:latest
 
 stages:
   - build
+  - deploy
   
 singularity-image:
   stage: build
@@ -12,3 +13,10 @@ singularity-image:
   artifacts:
     paths:
        - airl_env_base.def
+
+launch_experiment:
+  stage: deploy
+  script:
+    - /bin/bash ./.gitlabci/launch_exp.sh
+  when:manual
+  

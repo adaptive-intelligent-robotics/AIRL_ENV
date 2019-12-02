@@ -138,7 +138,8 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__commands.append("bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/pip")
         self.__commands.append("pip3 --no-cache-dir install --upgrade /tmp/pip/tensorflow-*.whl ")
     
-        self.__commands.append("mkdir -p                "+self.__workspace+"/include/google/tensorflow") 
+        self.__commands.append("mkdir -p                "+self.__workspace+"/include/google/tensorflow")
+        self.__commands.append("mkdir -p                "+self.__workspace+"/lib") 
         self.__commands.append("cp -r bazel-genfiles/*  "+self.__workspace+"/include/google/tensorflow/")
         self.__commands.append("cp -r tensorflow        "+self.__workspace+"/include/google/tensorflow/")
         self.__commands.append('find                    '+self.__workspace+'/include/google/tensorflow -type f  ! -name "*.h" -delete')
