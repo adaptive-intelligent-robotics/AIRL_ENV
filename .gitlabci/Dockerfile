@@ -14,6 +14,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     ca-certificates \
     cryptsetup-bin \
     uidmap \
+    curl \
     git &&\
     ln -s /usr/bin/python3 /usr/bin/python
 	

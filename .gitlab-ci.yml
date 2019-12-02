@@ -19,3 +19,8 @@ launch_experiment:
   script:
     - /bin/bash ./.gitlabci/launch_exp.sh
   when: manual
+  only:
+    variables:
+      - $CI_COMMIT_REF_PROTECTED =="true"
+
+    
