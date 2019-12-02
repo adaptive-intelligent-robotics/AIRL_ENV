@@ -18,5 +18,4 @@ launch_experiment:
   stage: deploy
   script:
     - /bin/bash ./.gitlabci/launch_exp.sh
-  when:manual
-  
+  when: manual
