@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
 
-# idiomatic parameter and option handling in sh
-while test $# -gt 0
-do
-    case "$1" in
+
+# --- Option processing --------------------------------------------------------
+
+while true; do
+    case ${1:-} in
         --nofakeroot) nofakeroot=true
-            ;;
-        --*) echo "bad option $1"
-            ;;
-        *) echo "argument $1"
-            ;;
+            shift
+        ;;
+        \?) printf "illegal option: -%s\n" "${1:-}" >&2
+            usage
+            exit 1
+        ;;
+        -*)
+            printf "illegal option: -%s\n" "${1:-}" >&2
+            usage
+            exit 1
+        ;;
+        *)
+            break;
+        ;;
     esac
-    shift
 done
+
 
 build_option=""
 if [ "$nofakeroot" != true ]; then
