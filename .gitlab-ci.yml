@@ -7,9 +7,9 @@ stages:
 singularity-image:
   stage: build
   script:
-     - /bin/bash ./.gitlabci/build_base.sh --nofakeroot
-     - /bin/bash ./.gitlabci/test_images.sh --nofakeroot
-     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh --uri library://airl_lab/default/airl_env --tag base_ci --cli registry; else echo "NOT on master branch, not pushing"; fi; 
+     - /bin/bash ./.gitlabci/build_base.sh airl_env_base --nofakeroot 
+     - /bin/bash ./.gitlabci/test_images.sh airl_env_base.sif --nofakeroot 
+     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh airl_env_base --uri library://airl_lab/default/airl_env --tag base_ci --cli registry ; else echo "NOT on master branch, not pushing"; fi; 
   artifacts:
     paths:
        - airl_env_base.def
