@@ -4,15 +4,26 @@ stages:
   - build
   - deploy
   
-singularity-image:
+airl_env_base:
   stage: build
   script:
      - /bin/bash ./.gitlabci/build_image.sh airl_env_base --nofakeroot 
      - /bin/bash ./.gitlabci/test_image.sh airl_env_base.sif --nofakeroot 
-     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh airl_env_base --uri library://airl_lab/default/airl_env --tag base_ci --cli registry ; else echo "NOT on master branch, not pushing"; fi; 
+     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh airl_env_base.sif --uri library://airl_lab/default/airl_env --tag base_ci --cli registry ; else echo "NOT on master branch, not pushing"; fi; 
   artifacts:
     paths:
        - airl_env_base.def
+
+airl_env_tensorflow:
+  stage: build
+  script:
+     - /bin/bash ./.gitlabci/build_image.sh airl_env_tensorflow --nofakeroot 
+     - /bin/bash ./.gitlabci/test_image.sh airl_env_tensorlow.sif --nofakeroot 
+     - if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh airl_env_tensorflow.sif --uri library://airl_lab/default/airl_env --tag tensorflow_ci --cli registry ; else echo "NOT on master branch, not pushing"; fi; 
+  artifacts:
+    paths:
+       - airl_env_tensorflow.def
+
 
 launch_experiment:
   stage: deploy
