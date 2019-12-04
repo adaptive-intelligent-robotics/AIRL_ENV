@@ -27,7 +27,12 @@ print(hpccm.building_blocks.gnu())
 ## ==== Composition of building blocks ====
 print(hpccm.building_blocks.packages(ospackages=['emacs','vim','less']))
 
+print(hexapod_common())
+print(robot_dart())
+print(sferes())
+print(visu_server())
 print(tensorflow())
+
 
 
 
