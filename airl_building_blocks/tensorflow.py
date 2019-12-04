@@ -130,7 +130,7 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__commands.append("cd "+self.__wd+"/tensorflow")
         self.__commands.append('LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH} \
     	tensorflow/tools/ci_build/builds/configured GPU \
-    	bazel build --noshow_progress --experimental_ui_limit_console_output 1000000 -c opt --local_resources=20000,40,1.0 --copt=-mavx --config=cuda \
+    	bazel build --noshow_progress --experimental_ui_limit_console_output 1000000 -c opt --local_resources=20000,40,1.0 --copt=-Wcomment --copt=-Wmaybe-uninitialized --copt=-Wunknown-pragmas --copt=-mavx --config=cuda \
     	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1" \
     	//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow_cc.so //tensorflow:libtensorflow_framework.so')
 

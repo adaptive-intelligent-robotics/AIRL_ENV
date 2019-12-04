@@ -83,7 +83,7 @@ From: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
     export TF_CUDNN_VERSION=7
     ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1
     cd /git/tensorflow
-    LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH}     	tensorflow/tools/ci_build/builds/configured GPU     	bazel build --noshow_progress --experimental_ui_limit_console_output 1000000 -c opt --local_resources=20000,40,1.0 --copt=-nvcc_options=disable-warnings --copt=-mavx --config=cuda     	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1"     	//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow_cc.so //tensorflow:libtensorflow_framework.so
+    LD_LIBRARY_PATH=/usr/local/cuda/lib64/stubs:${LD_LIBRARY_PATH}     	tensorflow/tools/ci_build/builds/configured GPU     	bazel build --noshow_progress --experimental_ui_limit_console_output 1000000 -c opt --local_resources=20000,40,1.0 --copt=-Wcomment --copt=-Wmaybe-uninitialized --copt=-Wunknown-pragmas --copt=-mavx --config=cuda     	--cxxopt="-D_GLIBCXX_USE_CXX11_ABI=1"     	//tensorflow/tools/pip_package:build_pip_package //tensorflow:libtensorflow_cc.so //tensorflow:libtensorflow_framework.so
     rm /usr/local/cuda/lib64/stubs/libcuda.so.1
     bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/pip
     pip3 --no-cache-dir install --upgrade /tmp/pip/tensorflow-*.whl 
