@@ -186,5 +186,5 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__setup_bazel()
         self.__commands.append("python3 -m ipykernel.kernelspec")        
         self.__setup_tensorflow()
-        #self.__setup_protobuf()
-        #self.__setup_abseil()
+        self.__setup_protobuf()
+        self.__setup_abseil()
