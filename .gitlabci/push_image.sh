@@ -66,6 +66,7 @@ while true; do
         ;;
         -i|--imagefile)
             shift
+	    echo "imagefile provided"
             imagefile="${1:-}"
             shift
         ;;

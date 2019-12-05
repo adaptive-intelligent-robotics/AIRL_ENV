@@ -2,12 +2,17 @@
 
 # --- Option processing --------------------------------------------------------
 tag=""
-
+basename=""
 while true; do
     case ${1:-} in
         -t|--tag)
             shift
             tag="${1:-}"
+            shift
+        ;;
+        -b|--basename)
+            shift
+            basename="${1:-}"
             shift
         ;;
         \?) printf "illegal option: -%s\n" "${1:-}" >&2
@@ -24,13 +29,6 @@ while true; do
         ;;
     esac
 done
-
-
-if [ $# == 0 ] ; then
-    basename="airl_env_base"
-else
-    basename=$1
-fi
 
 /bin/bash ./.gitlabci/build_image.sh $basename --nofakeroot 
 /bin/bash ./.gitlabci/test_image.sh $basename.sif --nofakeroot 
