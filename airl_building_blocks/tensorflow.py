@@ -157,7 +157,7 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__commands.append(self.clone_step(branch="v3.7.0",
                                                repository='https://github.com/google/protobuf',
                                                path=self.__wd, directory='protobuf'))
-        self.__commands.append("cd protobuf")
+        self.__commands.append("cd "+self.__wd+"/protobuf")
         self.__commands.append("git submodule update --init --recursive")
         self.__commands.append("./autogen.sh")
         self.__commands.append("./configure --prefix="+self.__workspace)
@@ -169,7 +169,7 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__commands.append(self.clone_step(branch="20180600",
                                                repository='https://github.com/abseil/abseil-cpp.git',
                                                path=self.__wd, directory='abseil-cpp'))
-        self.__commands.append("cd abseil-cpp")
+        self.__commands.append("cd "+self.__wd+"/abseil-cpp")
         self.__commands.append("mkdir build && cd build")
         self.__commands.append("cmake -DCMAKE_INSTALL_PREFIX:PATH="+self.__workspace+" ..")
         self.__commands.append("make -j")
