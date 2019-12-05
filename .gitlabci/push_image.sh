@@ -42,7 +42,7 @@ function usage() {
 uri=""
 cli=""
 tag=""
-
+imagefile=""
 while true; do
     case ${1:-} in
         -h|--help|help)
@@ -64,6 +64,11 @@ while true; do
             cli="${1:-}"
             shift
         ;;
+        -i|--imagefile)
+            shift
+            imagefile="${1:-}"
+            shift
+        ;;
         \?) printf "illegal option: -%s\n" "${1:-}" >&2
             usage
             exit 1
@@ -83,13 +88,10 @@ done
 ### Image File ################################################################
 ################################################################################
 
-
-if [ $# == 0 ] ; then
+if [ "${imagefile}" == "" ]; then
     imagefile="airl_env_base.sif"
-else
-    imagefile=$1
 fi
-
+	
 echo ""
 echo "Image file: ${imagefile}"
 
