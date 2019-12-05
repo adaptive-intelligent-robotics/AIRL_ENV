@@ -3,13 +3,18 @@
 
 
 # --- Option processing --------------------------------------------------------
-
+basename=""
 while true; do
     case ${1:-} in
         --nofakeroot) nofakeroot=true
             shift
+        ;; 
+        -b|--basename)
+            shift
+            basename="${1:-}"
+            shift
         ;;
-        \?) printf "illegal option: -%s\n" "${1:-}" >&2
+	\?) printf "illegal option: -%s\n" "${1:-}" >&2
             usage
             exit 1
         ;;
@@ -23,6 +28,8 @@ while true; do
         ;;
     esac
 done
+echo "basename (build):"
+echo $basename
 
 
 

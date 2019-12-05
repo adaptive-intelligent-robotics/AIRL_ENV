@@ -30,6 +30,11 @@ while true; do
     esac
 done
 
-/bin/bash ./.gitlabci/build_image.sh $basename --nofakeroot 
-/bin/bash ./.gitlabci/test_image.sh $basename.sif --nofakeroot 
+echo "basename:"
+echo $basename
+echo "tag:"
+echo $tag
+
+/bin/bash ./.gitlabci/build_image.sh --basename $basename --nofakeroot 
+/bin/bash ./.gitlabci/test_image.sh --imagefile $basename.sif --nofakeroot 
 if [ $CI_COMMIT_REF_NAME = "master" ]; then /bin/bash ./.gitlabci/push_image.sh --uri library://airl_lab/default/airl_env --tag $tag --cli registry --imagefile $basename.sif  ; else echo "NOT on master branch, not pushing"; fi; 

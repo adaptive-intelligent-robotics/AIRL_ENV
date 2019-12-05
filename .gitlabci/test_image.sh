@@ -2,10 +2,15 @@
 
 
 # --- Option processing --------------------------------------------------------
-
+imagefile=""
 while true; do
     case ${1:-} in
         --nofakeroot) nofakeroot=true
+            shift
+        ;;
+        -i|--imagefile)
+            shift
+            imagefile="${1:-}"
             shift
         ;;
         \?) printf "illegal option: -%s\n" "${1:-}" >&2
@@ -28,12 +33,6 @@ build_option=""
 if [ "$nofakeroot" != true ]; then
     echo "using FAKEROOT"
     build_option="--fakeroot"
-fi
-
-if [ $# == 0 ] ; then
-    imagefile="airl_env_base.sif"
-else
-    imagefile=$1
 fi
 
 echo ""
