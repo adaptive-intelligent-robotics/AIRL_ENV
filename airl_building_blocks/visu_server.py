@@ -45,6 +45,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
 
         self.__workspace = kwargs.get('workspace', '/workspace')
         self.__commands = [] # Filled in by __setup()
+        self.__tests = [] # Filled in by __setup()    
         self.__wd = '/git' # working directory
 
         # Construct the series of steps to execute
@@ -61,7 +62,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
         self += copy(src='resources/visu_server', dest='/tmp/')
         self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
         self += shell(commands=self.__commands)
-
+        self += shell(commands=self.__tests, _test=True)
 
     def __setup(self):
         """Construct the series of shell commands, i.e., fill in
@@ -85,6 +86,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
         self.__commands.append('mv /tmp/visu_server/etc/xdg/openbox /etc/xdg/openbox')
         self.__commands.append('mv /tmp/visu_server/etc/turbovncserver.conf /etc/turbovncserver.conf')
         self.__commands.append('mv /tmp/visu_server/.vnc /opt/.vnc')
+        self.__commands.append('chmod og-rw /opt/.vnc/passwd')
         self.__commands.append('mkdir -p '+self.__workspace+'/bin')
         self.__commands.append('mv /tmp/visu_server/bin/visu_server.sh '+self.__workspace+'/bin')
 
@@ -110,3 +112,5 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
         self.__commands.append('ln -s vnc_lite.html index.html')
 
 
+        # TEST
+        self.__tests.append('visu_server.sh test')

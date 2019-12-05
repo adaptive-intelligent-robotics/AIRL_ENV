@@ -56,9 +56,17 @@ fi
 echo "Please do: export DISPLAY=\":$value\""
 echo "you can access the visualisation server at localhost:$port_novnc"
 
-
-wait
+if [ "$#" -eq 0 ]
+then
+    wait
+else
+    sleep 2
+    cleanup
+fi
 
 echo "Wait for cleanup"
 sleep 2
 echo "finished"
+
+
+exit 0
