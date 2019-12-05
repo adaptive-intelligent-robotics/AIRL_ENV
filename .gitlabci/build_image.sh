@@ -28,6 +28,7 @@ while true; do
         ;;
     esac
 done
+
 echo "basename (build):"
 echo $basename
 
@@ -38,6 +39,9 @@ if [ "$nofakeroot" != true ]; then
     echo "using FAKEROOT"
     build_option="--fakeroot"
 fi
+
+echo "build_option (build):"
+echo $build_option
 
 if [ $# == 0 ] ; then
     basename="airl_env_base"
