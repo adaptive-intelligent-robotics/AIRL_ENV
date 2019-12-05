@@ -43,13 +43,6 @@ fi
 echo "build_option (build):"
 echo $build_option
 
-if [ $# == 0 ] ; then
-    basename="airl_env_base"
-else
-    basename=$1
-fi
-
-
 python3 $basename.py > $basename.def
 ret=$?
 if [ $ret -ne 0 ]; then
