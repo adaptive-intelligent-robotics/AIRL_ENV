@@ -154,6 +154,7 @@ class tensorflow(bb_base, hpccm.templates.git):
 
     def __setup_protobuf(self):
         # Careful, the version of Protobuf should match the version used by bazel
+        self.__commands.append("cd "+self.__wd)
         self.__commands.append(self.clone_step(branch="v3.7.0",
                                                repository='https://github.com/google/protobuf',
                                                path=self.__wd, directory='protobuf'))
@@ -166,6 +167,7 @@ class tensorflow(bb_base, hpccm.templates.git):
         self.__commands.append("rm -Rf protobuf")
 
     def __setup_abseil(self):
+        self.__commands.append("cd "+self.__wd)
         self.__commands.append(self.clone_step(branch="20180600",
                                                repository='https://github.com/abseil/abseil-cpp.git',
                                                path=self.__wd, directory='abseil-cpp'))
