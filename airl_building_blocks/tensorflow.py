@@ -155,7 +155,7 @@ class tensorflow(bb_base, hpccm.templates.git):
     def __setup_protobuf(self):
         # Careful, the version of Protobuf should match the version used by bazel
         self.__commands.append("cd "+self.__wd)
-        self.__commands.append(self.clone_step(branch="v3.7.0",
+        self.__commands.append(self.clone_step(branch="v3.8.0",
                                                repository='https://github.com/google/protobuf',
                                                path=self.__wd, directory='protobuf'))
         self.__commands.append("cd "+self.__wd+"/protobuf")
