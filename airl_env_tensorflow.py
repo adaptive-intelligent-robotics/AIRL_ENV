@@ -28,10 +28,10 @@ print(hpccm.building_blocks.gnu())
 print(hpccm.building_blocks.packages(ospackages=['emacs','vim','less']))
 
 print(hexapod_common())
-print(robot_dart())
-print(sferes())
+print(robot_dart(simd = False))
+print(sferes(simd = False))
 print(visu_server())
-print(tensorflow())
+print(tensorflow(simd = False)) # The simd is not used for now on TF building block
 
 
 
