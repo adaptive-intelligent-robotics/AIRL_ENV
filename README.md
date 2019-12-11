@@ -15,3 +15,6 @@ The base version contains:
 
 The tensorflow version extends the base version with:
 - [Tensorflow](https://www.tensorflow.org/), compiled from source with cuda 10 and ready to link with sferes2. 
+
+The pytorch version extends the base version with:
+- [Pytorch](https://pytorch.org/), compiled from source with cuda 10 and ready to link with sferes2.

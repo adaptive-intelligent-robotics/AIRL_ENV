@@ -3,3 +3,7 @@
 *.simg
 *.sif
 *.pyc
+*.def
+
+.idea/
+venv/

@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 
 """
-AIRL Base image
+AIRL Tensorflow image
+Base Image: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 Contents:
-   TBD
+   - hexapod
+   - robot_dart
+   - sferes
+   - visu_server
+   - tensorflow
 """
 
 import hpccm
