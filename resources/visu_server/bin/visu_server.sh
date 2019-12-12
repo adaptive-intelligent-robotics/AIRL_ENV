@@ -22,7 +22,7 @@ echo "Starting services for VISU_server"
 
 
 echo "Starting TurboVNC"
-/opt/TurboVNC/bin/vncserver  &> /opt/turbovnc.log &
+/opt/TurboVNC/bin/vncserver  &> /tmp/turbovnc_$USER.log &
 turbovnc_pid="$!"
 echo $turbovnc_pid
 sleep 0.1
@@ -32,8 +32,8 @@ if ! ps -p ${turbovnc_pid} >/dev/null; then
     exit 1
 fi
 
-sleep 1
-str=$(cat /opt/turbovnc.log |grep "display unix:" )
+sleep 2
+str=$(cat /tmp/turbovnc_$USER.log |grep "display unix:" )
 value=${str#*"display unix:"}
 port_novnc=$((6080+$value))
 port_turbovnc=$((5900+$value))
@@ -42,7 +42,7 @@ port_turbovnc=$((5900+$value))
 
 echo "Starting novnc"
 cd /opt/noVNC
-bash -c "./utils/launch.sh --listen $port_novnc --vnc localhost:$port_turbovnc "  &> /opt/novnc.log &
+bash -c "./utils/launch.sh --listen $port_novnc --vnc localhost:$port_turbovnc "  &> /tmp/novnc_$USER.log &
 novnc_pid="$!"
 cd - &>/dev/null
 sleep 0.1
@@ -67,6 +67,4 @@ fi
 echo "Wait for cleanup"
 sleep 2
 echo "finished"
-
-
 exit 0
