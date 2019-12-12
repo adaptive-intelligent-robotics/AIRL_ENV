@@ -59,7 +59,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
 
         self += comment('INSTALLING HEXAPOD_COMMON')
         self += packages(ospackages=self.__ospackages)
-        self += copy(src='resources/visu_server', dest='/tmp/')
+        self += copy(src='resources/visu_server', dest='/tmp_visu/')
         self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
         self += shell(commands=self.__commands)
         self += shell(commands=self.__tests, _test=True)
@@ -81,16 +81,16 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
 
         self.__commands.append("sed -i 's/$host:/unix:/g' /opt/TurboVNC/bin/vncserver")
 
-        self.__commands.append('mv /tmp/visu_server/etc/X11 /etc/X11')
-        self.__commands.append('mv /tmp/visu_server/etc/skel/.xinitrc /etc/skel/')
-        self.__commands.append('mv /tmp/visu_server/etc/xdg/openbox /etc/xdg/openbox')
-        self.__commands.append('mv /tmp/visu_server/etc/turbovncserver.conf /etc/turbovncserver.conf')
-        self.__commands.append('mv /tmp/visu_server/.vnc /opt/.vnc')
+        self.__commands.append('mv /tmp_visu/visu_server/etc/X11 /etc/X11')
+        self.__commands.append('mv /tmp_visu/visu_server/etc/skel/.xinitrc /etc/skel/')
+        self.__commands.append('mv /tmp_visu/visu_server/etc/xdg/openbox /etc/xdg/openbox')
+        self.__commands.append('mv /tmp_visu/visu_server/etc/turbovncserver.conf /etc/turbovncserver.conf')
+        self.__commands.append('mv /tmp_visu/visu_server/.vnc /opt/.vnc')
         self.__commands.append('chmod og-rw /opt/.vnc/passwd')
         self.__commands.append('mkdir -p '+self.__workspace+'/bin')
-        self.__commands.append('mv /tmp/visu_server/bin/visu_server.sh '+self.__workspace+'/bin')
+        self.__commands.append('mv /tmp_visu/visu_server/bin/visu_server.sh '+self.__workspace+'/bin')
 
-        self.__commands.append('rm -r /tmp/visu_server')
+        self.__commands.append('rm -r /tmp_visu/visu_server')
         
         # Clone source
         self.__commands.append(self.clone_step(branch='v0.9.0',
