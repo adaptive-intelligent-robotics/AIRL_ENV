@@ -29,7 +29,7 @@ RUN cp /etc/profile /root/.profile
 
 RUN echo "Python Version:" && \
     python --version && \
-    pip3 install hpccm && \
+    pip3 install hpccm python-gitlab && \
     pip3 install sregistry[all] && \
     echo "sregistry Version:" && \
     sregistry version
@@ -54,7 +54,7 @@ RUN cd /tmp && \
 RUN echo "root:100000:65536" >> /etc/subuid && \
     echo "root:100000:65536" >> /etc/subgid
 
-ADD ./sregistry_file /sregistry_file
+
 
 CMD ["/bin/bash", "-c"]
 

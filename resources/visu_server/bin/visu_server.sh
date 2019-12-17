@@ -2,6 +2,7 @@
 
 turbovnc_pid=""
 novnc_pid=""
+value=""
 
 cleanup() {
     trap - TERM QUIT INT EXIT
@@ -11,9 +12,9 @@ cleanup() {
         echo "Terminating novnc (${novnc_pid})"
         kill ${novnc_pid}
     fi
-    if [ -n "${turbovnc_pid}" ]; then
-        echo "Terminating turbovnc (${turbovnc_pid})"
-        #kill ${turbovnc_pid}
+    if [ -n "${value}" ]; then
+	echo "Terminating turbovnc (DISPLAY=unix:${value})"
+        /opt/TurboVNC/bin/vncserver -kill unix:$value
     fi
 }
 trap "cleanup" TERM QUIT INT EXIT
