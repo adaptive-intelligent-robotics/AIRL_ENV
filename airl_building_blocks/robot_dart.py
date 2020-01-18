@@ -71,7 +71,7 @@ class robot_dart(bb_base, hpccm.templates.git):
         self.__commands.append('cd ' + self.__wd + '/robot_dart')
 
         # Change wscript to be more fine grained in the instruction set.
-        self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 -mavx2 '/g ./wscript")
+        self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 '/g ./wscript")
         
         # Configure and Install
         config = './waf configure --prefix ' + self.__workspace + ' --dart '+self.__workspace + ' --shared'
