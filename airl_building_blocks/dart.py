@@ -77,7 +77,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self.__commands.append('mkdir /git/dart/build')
         self.__commands.append('cd /git/dart/build')
         if self.__simd:
-            self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 -mavx2 -g -faligned-new '/g ../dart/CMakeLists.txt")
+            self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 -g -faligned-new '/g ../dart/CMakeLists.txt")
             self.__commands.append('cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..')
         else:
             self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace ..')

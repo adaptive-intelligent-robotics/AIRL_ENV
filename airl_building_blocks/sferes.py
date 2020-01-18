@@ -72,7 +72,7 @@ class sferes(bb_base, hpccm.templates.git):
         self.__commands.append('cd ' + self.__wd + '/sferes2')
         if self.__simd:
             #self.__commands.append("sed -i 's/-O3/-O3 -march=native -g -faligned-new '/g ./wscript")
-            self.__commands.append("sed -i 's/-O3/-O3 -mavx -msse -msse2 -mavx2 -g -faligned-new '/g ./wscript")
+            self.__commands.append("sed -i 's/-O3/-O3 -mavx -msse -msse2 -g -faligned-new '/g ./wscript")
 
         self.__commands.append('./waf configure --kdtree /workspace/include')
 
