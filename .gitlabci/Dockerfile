@@ -15,6 +15,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     cryptsetup-bin \
     uidmap \
     curl \
+    openssh-client \
     git &&\
     ln -s /usr/bin/python3 /usr/bin/python
 	
@@ -47,6 +48,7 @@ ENV PATH=/usr/local/go/bin:$PATH
 RUN cd /tmp && \
     git clone -b v3.4.0 https://www.github.com/sylabs/singularity.git &&\
     cd singularity && \
+    sed -i 's/https:/http:'/g ./internal/pkg/remote/remote.go && \
     ./mconfig && \
     make -C builddir && \
     make -C builddir install
