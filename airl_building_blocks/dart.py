@@ -69,7 +69,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(branch='release-6.9',
+        self.__commands.append(self.clone_step(commit='eb0c7dee150e5b4a568869d3ddb0459bd8186f81',
                                                repository='git://github.com/dartsim/dart.git',
                                                path=self.__wd, directory='dart'))
 
