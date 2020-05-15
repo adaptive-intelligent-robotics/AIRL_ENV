@@ -66,7 +66,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## CORRADE
         # Clone source
-        self.__commands.append(self.clone_step(branch='master',
+        self.__commands.append(self.clone_step(commit='1b78074ce77c9f43f196cb880e424e10a445ac71',
             repository='https://github.com/mosra/corrade.git',
             path=self.__wd, directory='corrade'))
 
@@ -80,7 +80,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## MAGNUM
         # Clone source
-        self.__commands.append(self.clone_step(branch='master',
+        self.__commands.append(self.clone_step(commit='a82a4c273e856f6cf2882b4b770be99030592a88',
             repository='https://github.com/mosra/magnum.git',
             path=self.__wd, directory='magnum'))
 
@@ -97,7 +97,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## Magnum Plugins
         # Clone source
-        self.__commands.append(self.clone_step(branch='master',
+        self.__commands.append(self.clone_step(commit='71626370d2dbe09d76f1788a7f0fee2ddc889764',
             repository='https://github.com/mosra/magnum-plugins.git',
             path=self.__wd, directory='magnum-plugins'))
         # Configure and Install
@@ -111,7 +111,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
         if self.__dart:
             ## Magnum DART Integration (DART needs to be installed)
             # Clone source
-            self.__commands.append(self.clone_step(branch='master',
+            self.__commands.append(self.clone_step(commit='8ab81bf388dec5c75f2c3fe4e48e43ee241e3ec3',
                                                    repository='https://github.com/mosra/magnum-integration.git',
                                                    path=self.__wd, directory='magnum-integration'))
             # Configure and Install
