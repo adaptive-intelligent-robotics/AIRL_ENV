@@ -28,6 +28,14 @@ airl_env_pytorch:
     paths:
        - airl_env_pytorch.def
 
+airl_env_bare:
+  stage: build
+  script:
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_bare --tag bare_ci
+  artifacts:
+    paths:
+       - airl_env_bare.def
+
 launch_experiment:
   stage: deploy
   script:
