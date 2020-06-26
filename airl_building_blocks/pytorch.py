@@ -81,7 +81,7 @@ class pytorch(bb_base, hpccm.templates.git):
         self.__commands.append(f"cd {self.__wd}")
 
         # Install PyTorch
-        self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.3.1")
+        self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.5.1")
         self.__commands.append("cd pytorch")
         self.__commands.append('export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}')
         self.__commands.append(f'MAX_JOBS={self.__max_jobs} python setup.py install')
