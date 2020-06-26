@@ -70,7 +70,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
         # Download packets
         self.__commands.append(self.download_step(url='https://svwh.dl.sourceforge.net/project/turbovnc/2.2.3/turbovnc_2.2.3_amd64.deb',directory=self.__wd))
         self.__commands.append(self.download_step(url='https://svwh.dl.sourceforge.net/project/virtualgl/2.6.3/virtualgl_2.6.3_amd64.deb',directory=self.__wd))
-        self.__commands.append(self.download_step(url='https://svwh.dl.sourceforge.net/project/libjpeg-turbo/2.0.3/libjpeg-turbo-official_2.0.3_amd64.deb',directory=self.__wd))
+        self.__commands.append(self.download_step(url='https://netix.dl.sourceforge.net/project/libjpeg-turbo/2.0.3/libjpeg-turbo-official_2.0.3_amd64.deb',directory=self.__wd))
 
         self.__commands.append('cd /git')
         self.__commands.append('dpkg -i *.deb')
