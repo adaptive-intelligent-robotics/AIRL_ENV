@@ -37,7 +37,7 @@ class pytorch(bb_base, hpccm.templates.git):
 
         self.__simd = kwargs.get('simd', True)
         self.__workspace = kwargs.get('workspace', '/workspace')
-        self.__cuda_version = kwargs.get('cuda_version', '10.0')
+        self.__cuda_version = kwargs.get('cuda_version', '10.1')
         self.__cudnn_version = kwargs.get('cudnn_version', '7')
         self.__anaconda_path = kwargs.get('anaconda_path', '/usr/local/anaconda')
         self.__max_jobs = kwargs.get('max_jobs', 16)
@@ -66,7 +66,7 @@ class pytorch(bb_base, hpccm.templates.git):
                                 'cmake',
                                 'cffi',
                                 'typing',
-                                'magma-cuda100'],
+                                'magma-cuda101'],
                       channels=['pytorch'],
                       eula=True)
 
