@@ -66,7 +66,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## CORRADE
         # Clone source
-        self.__commands.append(self.clone_step(commit='1b78074ce77c9f43f196cb880e424e10a445ac71',
+        self.__commands.append(self.clone_step(commit='6f5218d7b07250779687d5da5a58c535ea2c29b2',
             repository='https://github.com/mosra/corrade.git',
             path=self.__wd, directory='corrade'))
 
@@ -80,7 +80,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## MAGNUM
         # Clone source
-        self.__commands.append(self.clone_step(commit='a82a4c273e856f6cf2882b4b770be99030592a88',
+        self.__commands.append(self.clone_step(commit='ba156d329a4347f2c58a2d63d71a2db645666ce9',
             repository='https://github.com/mosra/magnum.git',
             path=self.__wd, directory='magnum'))
 
@@ -97,28 +97,28 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## Magnum Plugins
         # Clone source
-        self.__commands.append(self.clone_step(commit='71626370d2dbe09d76f1788a7f0fee2ddc889764',
+        self.__commands.append(self.clone_step(commit='2d7433614696132f9e06d50b23959b21f9cbe51b',
             repository='https://github.com/mosra/magnum-plugins.git',
             path=self.__wd, directory='magnum-plugins'))
         # Configure and Install
         self.__commands.append('mkdir ' + self.__wd+'/magnum-plugins/build')
         self.__commands.append('cd ' + self.__wd+'/magnum-plugins/build')
         
-        self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+' -DWITH_ASSIMPIMPORTER=ON -DWITH_DDSIMPORTER=ON -DWITH_JPEGIMPORTER=ON -DWITH_OPENGEXIMPORTER=ON -DWITH_PNGIMPORTER=ON -DWITH_TINYGLTFIMPORTER=ON .. ')
+        self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+' -DWITH_ASSIMPIMPORTER=ON -DWITH_DDSIMPORTER=ON -DWITH_JPEGIMPORTER=ON -DWITH_OPENGEXIMPORTER=ON -DWITH_PNGIMPORTER=ON -DWITH_TINYGLTFIMPORTER=ON -DWITH_STBTRUETYPEFONT=ON .. ')
         self.__commands.append('make -j')
         self.__commands.append('make install')
 
         if self.__dart:
             ## Magnum DART Integration (DART needs to be installed)
             # Clone source
-            self.__commands.append(self.clone_step(commit='8ab81bf388dec5c75f2c3fe4e48e43ee241e3ec3',
+            self.__commands.append(self.clone_step(commit='1eae5514bb66530b58898f5858f6a8d231279fa5',
                                                    repository='https://github.com/mosra/magnum-integration.git',
                                                    path=self.__wd, directory='magnum-integration'))
             # Configure and Install
             self.__commands.append('mkdir ' + self.__wd+'/magnum-integration/build')
             self.__commands.append('cd ' + self.__wd+'/magnum-integration/build')
             
-            self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+'  -DWITH_DART=ON .. ')
+            self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+'  -DWITH_DART=ON  -DWITH_EIGEN=ON .. ')
             self.__commands.append('make -j')
             self.__commands.append('make install')
 

@@ -113,4 +113,4 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
 
 
         # TEST
-        self.__tests.append('visu_server.sh test')
+        #self.__tests.append('visu_server.sh test')

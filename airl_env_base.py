@@ -17,7 +17,7 @@ from airl_building_blocks import *
 hpccm.config.set_container_format('singularity')
 
 print(hpccm.primitives.baseimage(image='ubuntu:18.04',_docker_env=False))
-print(hpccm.primitives.label(metadata={'Author': 'a.cully@imperial.ac.uk', 'Version':'v0.2'}))
+print(hpccm.primitives.label(metadata={'Author': 'a.cully@imperial.ac.uk', 'Version':'v2.0'}))
 
 
 ## ==== Common dependencies ====
@@ -31,10 +31,10 @@ print(hpccm.building_blocks.gnu())
 ## ==== Composition of building blocks ====
 print(hpccm.building_blocks.packages(ospackages=['emacs','vim','less']))
 
-print(hexapod_common())
+#print(hexapod_common())
 print(robot_dart())
-print(sferes())
-print(visu_server())
+#print(sferes())
+#print(visu_server())
 
 
 
