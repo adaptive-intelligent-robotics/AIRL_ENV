@@ -54,7 +54,9 @@ class robot_dart(bb_base, hpccm.templates.git):
 
         self += comment('====INSTALLING ROBOT_DART=====')
         self += packages(ospackages=self.__ospackages)
-        self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
+        self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH',
+                                       'PATH':self.__workspace+'/bin:$PATH',
+                                       'LC_ALL': 'C'})
 
         self += dart(simd=self.__simd)
 
@@ -95,4 +97,4 @@ class robot_dart(bb_base, hpccm.templates.git):
         self.__tests.append('cd /git/robot_dart')
         self.__tests.append('./waf examples')
         self.__tests.append('./build/hexapod_plain')
-        
+
