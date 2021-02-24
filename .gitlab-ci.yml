@@ -12,14 +12,6 @@ airl_env_base:
     paths:
        - airl_env_base.def
 
-airl_env_tensorflow:
-  stage: build
-  script:
-     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_tensorflow --tag "tensorflow_ci_${CI_COMMIT_SHORT_SHA}"
-  artifacts:
-    paths:
-       - airl_env_tensorflow.def
-
 airl_env_pytorch:
   stage: build
   script:
