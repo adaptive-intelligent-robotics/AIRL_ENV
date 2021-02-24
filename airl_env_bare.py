@@ -22,7 +22,7 @@ print(hpccm.primitives.shell(commands=['ln -s /usr/bin/python3 /usr/bin/python']
 
 
 ## ==== Composition of building blocks ====
-print(hpccm.building_blocks.packages(ospackages=['emacs','vim','less']))
+print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less', 'gdb']))
 
 
 
