@@ -2,7 +2,7 @@
 
 """
 AIRL Bare image (no packages installed)
-Base Image: ubuntu:18.04
+Base Image: ubuntu:20.04
 Contents:
    - empty
 """
@@ -12,8 +12,8 @@ import hpccm
 # generate a Singularity definition file
 hpccm.config.set_container_format('singularity')
 
-print(hpccm.primitives.baseimage(image='ubuntu:18.04',_docker_env=False))
-print(hpccm.primitives.label(metadata={'Author': 'olle.nilsson19@imperial.ac.uk', 'Version':'v0.1'}))
+print(hpccm.primitives.baseimage(image='ubuntu:20.04',_docker_env=False))
+print(hpccm.primitives.label(metadata={'Author': 'olle.nilsson19@imperial.ac.uk', 'Version':'v2.2'}))
 
 
 ## ==== Common dependencies ====
