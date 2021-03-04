@@ -27,7 +27,7 @@ class robot_dart(bb_base, hpccm.templates.git):
 
         self.__ospackages = kwargs.get('ospackages', ['ca-certificates',
                                                       'git',
-                                                      'ffmpeg'
+                                                      'ffmpeg',
                                                       'libeigen3-dev',
                                                       'python3-dev',
                                                       'libboost-filesystem-dev',
