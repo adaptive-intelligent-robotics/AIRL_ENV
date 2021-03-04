@@ -48,7 +48,9 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
 	                                              'libtinyxml2-dev',
 	                                              'liburdfdom-dev',
                                                       'libboost-regex-dev',
-                                                      'libboost-system-dev'])
+                                                      'libboost-system-dev',
+                                                      'pybind11',
+                                                      ])
         self.__simd = kwargs.get('simd', True)
         self.__commands = [] # Filled in by __setup()
         self.__wd = '/git' # working directory
@@ -73,8 +75,6 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
         """Construct the series of shell commands, i.e., fill in
            self.__commands"""
 
-        self.__install_pybind11()
-        
         # Clone source
         self.__commands.append(self.clone_step(commit='e14ff01fc7362409394061b0f0ad97ce50eb81c7',
                                                repository='git://github.com/dartsim/dart.git',
@@ -95,26 +95,6 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         # Cleanup directory
         self.__commands.append( self.cleanup_step([ posixpath.join(self.__wd, 'dart') ] ))
-
-
-    def __install_pybind11(self):
-        # Ubuntu 18.10 and older (for 19.04 and older it can be installed via apt-get)
-        self.__commands.append(self.clone_step(branch='v2.2.4',
-                                               repository='https://github.com/pybind/pybind11',
-                                               path=self.__wd, directory='pybind11'))
-
-        
-        self.__commands.append(f"cd {self.__wd}/pybind11")
-        self.__commands.append('mkdir build')
-        self.__commands.append('cd build')
-        self.__commands.append('cmake .. -DCMAKE_BUILD_TYPE=Release -DPYBIND11_TEST=OFF')
-        self.__commands.append('make -j16')
-        self.__commands.append('make install')
-        self.__commands.append('cd /')
-    
-        # Cleanup directory
-        self.__commands.append( self.cleanup_step([ posixpath.join(self.__wd, 'pybind11') ] ))
-
 
     def __install_dart_py(self):
         self.__commands.append(f"cd {self.__wd}/dart")
