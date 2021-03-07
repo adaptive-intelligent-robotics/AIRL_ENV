@@ -29,6 +29,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
         super(dart, self).__init__(**kwargs)
 
         self.__ospackages = kwargs.get('ospackages', ['ca-certificates',
+                                                      'build-essential',
                                                       'git',
                                                       'cmake',
 	                                              'pkg-config',
@@ -45,11 +46,13 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
                                                       'libopenscenegraph-dev',
 	                                              'libbullet-dev',
 	                                              'libode-dev',
+	                                              'libtinyxml-dev',
 	                                              'libtinyxml2-dev',
 	                                              'liburdfdom-dev',
                                                       'libboost-regex-dev',
+                                                      'libboost-all-dev',
                                                       'libboost-system-dev',
-                                                      'pybind11',
+                                                      'pybind11-dev',
                                                       ])
         self.__simd = kwargs.get('simd', True)
         self.__commands = [] # Filled in by __setup()
@@ -76,7 +79,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(commit='e14ff01fc7362409394061b0f0ad97ce50eb81c7',
+        self.__commands.append(self.clone_step(commit='v6.9.4',
                                                repository='git://github.com/dartsim/dart.git',
                                                path=self.__wd, directory='dart'))
 
