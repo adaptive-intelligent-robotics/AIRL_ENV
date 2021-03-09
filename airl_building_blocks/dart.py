@@ -79,7 +79,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(commit='v6.9.4',
+        self.__commands.append(self.clone_step(commit='v6.9.5',
                                                repository='git://github.com/dartsim/dart.git',
                                                path=self.__wd, directory='dart'))
 
@@ -88,7 +88,8 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self.__commands.append(f"cd {self.__wd}/dart/build")
         if self.__simd:
             self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 -g -faligned-new '/g ../dart/CMakeLists.txt")
-            self.__commands.append('cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DCMAKE_BUILD_TYPE=Release ..')
+            self.__commands.append("echo $PATH")
+            self.__commands.append('PATH=/usr/bin/:${PATH} cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DCMAKE_BUILD_TYPE=Release ..')
         else:
             self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace  -DCMAKE_BUILD_TYPE=Release  ..')
         self.__commands.append('make -j16 install')
@@ -102,8 +103,9 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
     def __install_dart_py(self):
         self.__commands.append(f"cd {self.__wd}/dart")
 
-        self.__commands.append(f"mkdir build_py") # we need a different folder
-        self.__commands.append(f"cd build_py")
-        self.__commands.append(f"cmake -DDART_BUILD_DARTPY=ON -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DCMAKE_BUILD_TYPE=Release ..")
-        self.__commands.append(f"make -j16")
-        self.__commands.append(f"make install")
+        self.__commands.append("mkdir build_py") # we need a different folder
+        self.__commands.append("cd build_py")
+        self.__commands.append("PATH=/usr/bin/:${PATH} cmake -DDART_BUILD_DARTPY=ON -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DCMAKE_BUILD_TYPE=Release ..")
+        self.__commands.append("make -j16")
+        self.__commands.append("make install")
+
