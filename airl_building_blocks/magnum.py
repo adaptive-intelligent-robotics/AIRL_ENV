@@ -80,7 +80,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## MAGNUM
         # Clone source
-        self.__commands.append(self.clone_step(commit='62628beac97726468351a1485b01caa5662a0d02',
+        self.__commands.append(self.clone_step(commit='64433315a1d8d6d8b05cf0cd083a44af67218846',
             repository='https://github.com/mosra/magnum.git',
             path=self.__wd, directory='magnum'))
 
