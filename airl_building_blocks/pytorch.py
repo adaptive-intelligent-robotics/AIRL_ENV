@@ -37,8 +37,8 @@ class pytorch(bb_base, hpccm.templates.git):
 
         self.__simd = kwargs.get('simd', True)
         self.__workspace = kwargs.get('workspace', '/workspace')
-        self.__cuda_version = kwargs.get('cuda_version', '10.1')
-        self.__cudnn_version = kwargs.get('cudnn_version', '7')
+        # self.__cuda_version = kwargs.get('cuda_version', '10.1')
+        # self.__cudnn_version = kwargs.get('cudnn_version', '7')
         self.__anaconda_path = kwargs.get('anaconda_path', '/usr/local/anaconda')
         self.__max_jobs = kwargs.get('max_jobs', 16)
 
@@ -65,8 +65,12 @@ class pytorch(bb_base, hpccm.templates.git):
                                 'setuptools',
                                 'cmake',
                                 'cffi',
-                                'typing',
-                                'magma-cuda101'],
+                                'typing_extensions',
+                                'future',
+                                'six',
+                                'requests',
+                                'dataclasses',
+                                'magma-cuda111'],
                       channels=['pytorch'],
                       eula=True)
 
@@ -81,13 +85,13 @@ class pytorch(bb_base, hpccm.templates.git):
         self.__commands.append(f"cd {self.__wd}")
 
         # Install PyTorch
-        self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.5.1")
+        self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.8.0")
         self.__commands.append("cd pytorch")
         self.__commands.append('export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}')
         self.__commands.append(f'MAX_JOBS={self.__max_jobs} python setup.py install')
 
         # Create symlinks from workspace to pytorch include and lib
-        torch_path = f'{self.__anaconda_path}/lib/python3.7/site-packages/torch'
+        torch_path = f'{self.__anaconda_path}/lib/python3.8/site-packages/torch'
 
         self.__commands.append(f'mkdir -p {self.__workspace}/lib')
         self.__commands.append(f'ln -s {torch_path}/lib     {self.__workspace}/lib/torch')
