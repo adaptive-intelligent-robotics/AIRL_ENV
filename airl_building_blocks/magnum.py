@@ -66,7 +66,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## CORRADE
         # Clone source
-        self.__commands.append(self.clone_step(commit='b329d0566e61dd0b2d7dd55f3931361a9593288d',
+        self.__commands.append(self.clone_step(commit='6f5218d7b07250779687d5da5a58c535ea2c29b2',
             repository='https://github.com/mosra/corrade.git',
             path=self.__wd, directory='corrade'))
 
@@ -80,7 +80,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## MAGNUM
         # Clone source
-        self.__commands.append(self.clone_step(commit='64433315a1d8d6d8b05cf0cd083a44af67218846',
+        self.__commands.append(self.clone_step(commit='ba156d329a4347f2c58a2d63d71a2db645666ce9',
             repository='https://github.com/mosra/magnum.git',
             path=self.__wd, directory='magnum'))
 
@@ -88,7 +88,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self.__commands.append('mkdir ' + self.__wd+'/magnum/build')
         self.__commands.append('cd ' + self.__wd+'/magnum/build')
 
-        self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+' -DWITH_AUDIO=ON -DWITH_DEBUGTOOLS=ON -DWITH_GL=ON -DWITH_MESHTOOLS=ON -DWITH_PRIMITIVES=ON -DWITH_SCENEGRAPH=ON -DWITH_SHADERS=ON -DWITH_TEXT=ON -DWITH_TEXTURETOOLS=ON -DWITH_TRADE=ON -DWITH_GLFWAPPLICATION=ON -DWITH_WINDOWLESSGLXAPPLICATION=ON -DWITH_WINDOWLESSEGLAPPLICATION=ON -DWITH_OPENGLTESTER=ON -DWITH_ANYAUDIOIMPORTER=ON -DWITH_ANYIMAGECONVERTER=ON -DWITH_ANYIMAGEIMPORTER=ON -DWITH_ANYSCENEIMPORTER=ON -DWITH_MAGNUMFONT=ON -DWITH_OBJIMPORTER=ON -DWITH_TGAIMPORTER=ON -DWITH_WAVAUDIOIMPORTER=ON .. ')
+        self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH='+self.__workspace+' -DWITH_AUDIO=ON -DWITH_DEBUGTOOLS=ON -DWITH_GL=ON -DWITH_MESHTOOLS=ON -DWITH_PRIMITIVES=ON -DWITH_SCENEGRAPH=ON -DWITH_SHADERS=ON -DWITH_TEXT=ON -DWITH_TEXTURETOOLS=ON -DWITH_TRADE=ON -DWITH_GLFWAPPLICATION=ON -DWITH_WINDOWLESSGLXAPPLICATION=ON -DWITH_OPENGLTESTER=ON -DWITH_ANYAUDIOIMPORTER=ON -DWITH_ANYIMAGECONVERTER=ON -DWITH_ANYIMAGEIMPORTER=ON -DWITH_ANYSCENEIMPORTER=ON -DWITH_MAGNUMFONT=ON -DWITH_OBJIMPORTER=ON -DWITH_TGAIMPORTER=ON -DWITH_WAVAUDIOIMPORTER=ON .. ')
         self.__commands.append('make -j')
         self.__commands.append('make install')
 
@@ -97,7 +97,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         ## Magnum Plugins
         # Clone source
-        self.__commands.append(self.clone_step(commit='6f823bda127a902a5600c30c219909a41cd323ba',
+        self.__commands.append(self.clone_step(commit='2d7433614696132f9e06d50b23959b21f9cbe51b',
             repository='https://github.com/mosra/magnum-plugins.git',
             path=self.__wd, directory='magnum-plugins'))
         # Configure and Install
@@ -111,7 +111,7 @@ class magnum(bb_base, hpccm.templates.git, hpccm.templates.rm):
         if self.__dart:
             ## Magnum DART Integration (DART needs to be installed)
             # Clone source
-            self.__commands.append(self.clone_step(commit='8e1ee6c000f6faf6f8717ed5ca7929d06e15394c',
+            self.__commands.append(self.clone_step(commit='1eae5514bb66530b58898f5858f6a8d231279fa5',
                                                    repository='https://github.com/mosra/magnum-integration.git',
                                                    path=self.__wd, directory='magnum-integration'))
             # Configure and Install

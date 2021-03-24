@@ -74,7 +74,7 @@ class robot_dart(bb_base, hpccm.templates.git):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(commit='d2bd42a4e1ee946d1bc6a597c4abcf688f2b31b8',
+        self.__commands.append(self.clone_step(commit='95d615b004c60c4d5352c3db2af138c2c63f570f',
             repository='https://github.com/resibots/robot_dart.git',
             path=self.__wd, directory='robot_dart'))
         self.__commands.append('cd ' + self.__wd + '/robot_dart')
