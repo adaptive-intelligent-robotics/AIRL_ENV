@@ -51,7 +51,7 @@ fi
 cat $basename.def
 
 if [ -z "${CI_COMMIT_SHORT_SHA}" ]; then
-  CI_COMMIT_SHORT_SHA="$(git rev-parse --short HEAD)"
+  CI_COMMIT_SHORT_SHA="$(git rev-parse --short=8 HEAD)"
 fi
 
 singularity build --notest $build_option "${basename}_${CI_COMMIT_SHORT_SHA}.sif" $basename.def
