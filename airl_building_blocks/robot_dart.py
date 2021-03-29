@@ -8,6 +8,7 @@ import hpccm.config
 import hpccm.templates.git
 
 from hpccm.building_blocks.base import bb_base
+from hpccm.building_blocks.pip import pip
 from hpccm.primitives.comment import comment
 from hpccm.primitives.workdir import workdir
 from hpccm.primitives.shell import shell
@@ -26,7 +27,9 @@ class robot_dart(bb_base, hpccm.templates.git):
 
         self.__ospackages = kwargs.get('ospackages', ['ca-certificates',
                                                       'git',
+                                                      'ffmpeg',
                                                       'libeigen3-dev',
+                                                      'python3-dev',
                                                       'libboost-filesystem-dev',
                                                       'libboost-system-dev',
                                                       'libboost-regex-dev',
@@ -52,10 +55,16 @@ class robot_dart(bb_base, hpccm.templates.git):
 
         self += comment('====INSTALLING ROBOT_DART=====')
         self += packages(ospackages=self.__ospackages)
-        self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
+        self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH',
+                                       'PATH':self.__workspace+'/bin:$PATH',
+                                       'LC_ALL': 'C'})
+
         self += dart(simd=self.__simd)
+
         if self.__magnum:
             self += magnum()
+        
+        
         self += shell(commands=self.__commands)
         self += shell(commands=self.__tests, _test=True)
         self += comment('====DONE ROBOT_DART=====')
@@ -65,7 +74,7 @@ class robot_dart(bb_base, hpccm.templates.git):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(commit='d9b128608935000784c2b23990e081108f92153b',
+        self.__commands.append(self.clone_step(commit='95d615b004c60c4d5352c3db2af138c2c63f570f',
             repository='https://github.com/resibots/robot_dart.git',
             path=self.__wd, directory='robot_dart'))
         self.__commands.append('cd ' + self.__wd + '/robot_dart')
@@ -74,19 +83,19 @@ class robot_dart(bb_base, hpccm.templates.git):
         self.__commands.append("sed -i 's/-march=native/-mavx -msse -msse2 '/g ./wscript")
         
         # Configure and Install
-        config = './waf configure --prefix ' + self.__workspace + ' --dart '+self.__workspace + ' --shared'
+        config = './waf configure --python  --prefix ' + self.__workspace + ' --dart '+self.__workspace + ' --shared'
         if self.__magnum:
             config += ' --magnum_install_dir  ' + self.__workspace + ' --magnum_integration_install_dir ' + self.__workspace + ' --magnum_plugins_install_dir ' + self.__workspace + ' --corrade_install_dir ' + self.__workspace
-        if self.__hexapod_common:
-            config += ' --controller ' + self.__workspace 
+        #if self.__hexapod_common:
+        #    config += ' --controller ' + self.__workspace 
         self.__commands.append(config)
         self.__commands.append('./waf')
         self.__commands.append('./waf install')
         self.__commands.append('./waf clean')
-
-        
+                
         self.__tests.append('export LD_LIBRARY_PATH='+self.__workspace+'/lib:$LD_LIBRARY_PATH')
+        self.__tests.append('export PATH='+self.__workspace+'/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin')
         self.__tests.append('cd /git/robot_dart')
-        self.__tests.append('./waf')
-        self.__tests.append('./build/pendulum_plain')
-        
+        self.__tests.append('./waf examples')
+        self.__tests.append('./build/hexapod_plain')
+

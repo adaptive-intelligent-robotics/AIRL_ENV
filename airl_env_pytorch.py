@@ -19,8 +19,8 @@ from airl_building_blocks import *
 # generate a Singularity definition file
 hpccm.config.set_container_format('singularity')
 
-print(hpccm.primitives.baseimage(image='nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04', _docker_env=False))
-print(hpccm.primitives.label(metadata={'Author': 'luca.grillotti16@imperial.ac.uk', 'Version': 'v0.1'}))
+print(hpccm.primitives.baseimage(image='nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04', _docker_env=False))
+print(hpccm.primitives.label(metadata={'Author': 'luca.grillotti16@imperial.ac.uk', 'Version': 'v2.2'}))
 
 ## ==== Common dependencies ====
 print(hpccm.building_blocks.python(python2=False, devel=True))
@@ -30,10 +30,11 @@ print(hpccm.primitives.shell(commands=['ln -s /usr/bin/python3 /usr/bin/python']
 print(hpccm.building_blocks.gnu())
 
 ## ==== Composition of building blocks ====
-print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less']))
+print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less', 'gdb']))
 
-print(hexapod_common())
+#  print(hexapod_common())
 print(robot_dart())
 print(sferes())
 print(visu_server())
 print(pytorch())
+
