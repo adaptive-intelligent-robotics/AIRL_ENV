@@ -3,11 +3,20 @@ image: aneoshun/airl_build_env:latest
 stages:
   - build
   - deploy
-  
+
+
+airl_env_bare:
+  stage: build
+  script:
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_bare --tag "bare_${CI_COMMIT_SHORT_SHA}"
+  artifacts:
+    paths:
+       - airl_env_bare.def
+
 airl_env_base:
   stage: build
   script:
-     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_base --tag "base_ci_${CI_COMMIT_SHORT_SHA}"
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_base --tag "base_${CI_COMMIT_SHORT_SHA}"
   artifacts:
     paths:
        - airl_env_base.def
@@ -15,18 +24,10 @@ airl_env_base:
 airl_env_pytorch:
   stage: build
   script:
-     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_pytorch --tag "pytorch_ci_${CI_COMMIT_SHORT_SHA}"
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_pytorch --tag "pytorch_${CI_COMMIT_SHORT_SHA}"
   artifacts:
     paths:
        - airl_env_pytorch.def
-
-airl_env_bare:
-  stage: build
-  script:
-     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_bare --tag "bare_ci_${CI_COMMIT_SHORT_SHA}"
-  artifacts:
-    paths:
-       - airl_env_bare.def
 
 launch_experiment:
   stage: deploy
