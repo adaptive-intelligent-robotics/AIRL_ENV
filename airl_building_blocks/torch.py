@@ -91,7 +91,7 @@ class torch(bb_base, hpccm.templates.git):
         self.__commands.append(f'MAX_JOBS={self.__max_jobs} python setup.py install')
 
         # Create symlinks from workspace to torch include and lib
-        torch_path = f'{self.__anaconda_path}/lib/python3.8/site-packages/torch'
+        torch_path = f'{self.__anaconda_path}/lib/python3.7/site-packages/torch'
 
         self.__commands.append(f'mkdir -p {self.__workspace}/lib')
         self.__commands.append(f'ln -s {torch_path}/lib     {self.__workspace}/lib/torch')
