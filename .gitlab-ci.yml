@@ -21,13 +21,13 @@ airl_env_base:
     paths:
        - airl_env_base.def
 
-airl_env_pytorch:
+airl_env_torch:
   stage: build
   script:
-     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_pytorch --tag "pytorch_${CI_COMMIT_SHORT_SHA}"
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_torch --tag "torch_${CI_COMMIT_SHORT_SHA}"
   artifacts:
     paths:
-       - airl_env_pytorch.def
+       - airl_env_torch.def
 
 launch_experiment:
   stage: deploy

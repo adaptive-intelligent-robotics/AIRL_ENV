@@ -13,11 +13,11 @@ from hpccm.primitives.environment import environment
 from hpccm.primitives.shell import shell
 
 
-class pytorch(bb_base, hpccm.templates.git):
+class torch(bb_base, hpccm.templates.git):
     def __init__(self, **kwargs):
         """Initialize building block"""
 
-        super(pytorch, self).__init__(**kwargs)
+        super(torch, self).__init__(**kwargs)
 
         self.__ospackages = kwargs.get('ospackages', ['ca-certificates',
                                                       'git',
@@ -55,7 +55,7 @@ class pytorch(bb_base, hpccm.templates.git):
     def __instructions(self):
         """Fill in container instructions"""
 
-        self += comment('====INSTALLING PYTORCH=====')
+        self += comment('====INSTALLING Torch=====')
         self += packages(ospackages=self.__ospackages)
         self += conda(packages=['numpy',
                                 'ninja',
@@ -78,19 +78,19 @@ class pytorch(bb_base, hpccm.templates.git):
 
         self += shell(commands=self.__commands)
         self += shell(commands=self.__tests, _test=True)
-        self += comment('====DONE PYTORCH=====')
+        self += comment('====DONE TORCH=====')
 
-    def __setup_pytorch(self):
+    def __setup_torch(self):
         self.__commands.append(f"mkdir -p {self.__wd}")
         self.__commands.append(f"cd {self.__wd}")
 
-        # Install PyTorch
+        # Install Torch
         self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.8.0")
         self.__commands.append("cd pytorch")
         self.__commands.append('export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}')
         self.__commands.append(f'MAX_JOBS={self.__max_jobs} python setup.py install')
 
-        # Create symlinks from workspace to pytorch include and lib
+        # Create symlinks from workspace to torch include and lib
         torch_path = f'{self.__anaconda_path}/lib/python3.8/site-packages/torch'
 
         self.__commands.append(f'mkdir -p {self.__workspace}/lib')
@@ -106,5 +106,5 @@ class pytorch(bb_base, hpccm.templates.git):
     def __setup(self):
         """Construct the series of shell commands, i.e., fill in
            self.__commands"""
-        self.__setup_pytorch()
+        self.__setup_torch()
         self.__cleanup()

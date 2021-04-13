@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 """
-AIRL PyTorch image
+AIRL Torch image
 Base Image: nvidia/cuda:10.0-cudnn7-devel-ubuntu18.04
 Contents:
    - hexapod
    - robot_dart
    - sferes
    - visu_server
-   - pytorch
+   - torch
 """
 
 import hpccm
@@ -36,5 +36,5 @@ print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less', 'gdb'])
 print(robot_dart())
 print(sferes())
 print(visu_server())
-print(pytorch())
+print(torch())
 
