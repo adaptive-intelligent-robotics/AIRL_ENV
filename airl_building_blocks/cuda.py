@@ -7,17 +7,18 @@ from __future__ import unicode_literals
 import hpccm.templates.git
 from hpccm.building_blocks.base import bb_base
 from hpccm.building_blocks.conda import conda
+from hpccm.building_blocks.pip import pip
 from hpccm.building_blocks.packages import packages
 from hpccm.primitives.comment import comment
 from hpccm.primitives.environment import environment
 from hpccm.primitives.shell import shell
 
 
-class torch(bb_base, hpccm.templates.git):
+class CUDA(bb_base, hpccm.templates.git):
     def __init__(self, **kwargs):
         """Initialize building block"""
 
-        super(torch, self).__init__(**kwargs)
+        super(CUDA, self).__init__(**kwargs)
 
         self.__ospackages = kwargs.get('ospackages', ['ca-certificates',
                                                       'git',
@@ -55,49 +56,16 @@ class torch(bb_base, hpccm.templates.git):
     def __instructions(self):
         """Fill in container instructions"""
 
-        self += comment('====INSTALLING Torch=====')
+        self += comment('====INSTALLING CUDA=====')
         self += packages(ospackages=self.__ospackages)
-        self += conda(packages=['numpy',
-                                'ninja',
-                                'pyyaml',
-                                'mkl',
-                                'mkl-include',
-                                'setuptools',
-                                'cmake',
-                                'cffi',
-                                'typing_extensions',
-                                'future',
-                                'six',
-                                'requests',
-                                'dataclasses',
-                                'magma-cuda111'],
-                      channels=['pytorch'],
-                      eula=True)
-
-        self += environment(variables={'LD_LIBRARY_PATH': f'{self.__workspace}/lib/torch/:$LD_LIBRARY_PATH'})
 
         self += shell(commands=self.__commands)
         self += shell(commands=self.__tests, _test=True)
-        self += comment('====DONE TORCH=====')
+        self += comment('====DONE CUDA=====')
 
-    def __setup_torch(self):
+    def __setup_cuda(self):
         self.__commands.append(f"mkdir -p {self.__wd}")
         self.__commands.append(f"cd {self.__wd}")
-
-        # Install Torch
-        self.__commands.append("git clone --recursive https://github.com/pytorch/pytorch --branch v1.8.0")
-        self.__commands.append("cd pytorch")
-        self.__commands.append('export CMAKE_PREFIX_PATH=${CONDA_PREFIX:-"$(dirname $(which conda))/../"}')
-        self.__commands.append(f'MAX_JOBS={self.__max_jobs} python setup.py install')
-
-        # Create symlinks from workspace to torch include and lib
-        torch_path = f'{self.__anaconda_path}/lib/python3.7/site-packages/torch'
-
-        self.__commands.append(f'mkdir -p {self.__workspace}/lib')
-        self.__commands.append(f'ln -s {torch_path}/lib     {self.__workspace}/lib/torch')
-
-        self.__commands.append(f'mkdir -p {self.__workspace}/include')
-        self.__commands.append(f'ln -s {torch_path}/include {self.__workspace}/include/torch')
 
     def __cleanup(self):
         self.__commands.append(f"cd {self.__wd}")
@@ -106,5 +74,5 @@ class torch(bb_base, hpccm.templates.git):
     def __setup(self):
         """Construct the series of shell commands, i.e., fill in
            self.__commands"""
-        self.__setup_torch()
+        self.__setup_cuda()
         self.__cleanup()

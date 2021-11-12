@@ -7,4 +7,5 @@ from .sferes import sferes
 from .visu_server import visu_server
 from .tensorflow import tensorflow
 from .torch import torch
+from .cuda import CUDA
 
