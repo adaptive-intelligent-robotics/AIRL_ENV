@@ -43,7 +43,21 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         self += comment('====INSTALLING BRAX====')
         self += packages(ospackages=self.__ospackages)
-        self += pip(packages=['jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_releases.html'], pip='pip3')
+        self += pip(packages=['absl-py==1.0.0',
+                              'jax==0.3.10',
+                              'brax==0.0.12',
+                              'flax==0.4.1',
+                              'gym==0.15.4',
+                              'numpy==1.19.5',
+                              'scikit-learn==1.0.1',
+                              'scipy==1.7.3',
+                              'seaborn==0.11.2',
+                              'sklearn==0.0',
+                              'typing-extensions==3.10',
+                              'hydra-core==1.1.2'
+                              ], 
+                              pip='pip3')
+        self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_releases.html'], pip='pip3')
         self += shell(commands=self.__commands)
         
         self += comment('====DONE BRAX====')
@@ -53,14 +67,14 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
            self.__commands"""
 
         # Clone source
-        self.__commands.append(self.clone_step(commit='34a70fa16497fd81ac2940f9e4a7c96bbfb31e86',
-                                               repository='git://github.com/google/brax.git',
-                                               path=self.__wd, directory='brax'))
+        #self.__commands.append(self.clone_step(commit='34a70fa16497fd81ac2940f9e4a7c96bbfb31e86',
+        #                                       repository='git://github.com/google/brax.git',
+        #                                       path=self.__wd, directory='brax'))
 
         # Configure and Install
-        self.__commands.append(f"cd {self.__wd}/brax/")
-        self.__commands.append("pip3 install -e .")
-        self.__commands.append(f"cd {self.__wd}")
+        #self.__commands.append(f"cd {self.__wd}/brax/")
+        #self.__commands.append("pip3 install -e .")
+        #self.__commands.append(f"cd {self.__wd}")
         
         # Cleanup directory
         #self.__commands.append( self.cleanup_step([ posixpath.join(self.__wd, 'brax') ] ))
