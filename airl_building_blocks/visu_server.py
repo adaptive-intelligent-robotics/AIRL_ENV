@@ -57,7 +57,7 @@ class visu_server(bb_base, hpccm.templates.git, hpccm.templates.rm, hpccm.templa
     def __instructions(self):
         """Fill in container instructions"""
 
-        self += comment('INSTALLING HEXAPOD_COMMON')
+        self += comment('INSTALLING VISU_SERVER')
         self += packages(ospackages=self.__ospackages)
         self += copy(src='resources/visu_server', dest='/tmp_visu/')
         self += environment(variables={'LD_LIBRARY_PATH':self.__workspace +'/lib:$LD_LIBRARY_PATH','PATH':self.__workspace+'/bin:$PATH'})
