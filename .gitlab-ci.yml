@@ -29,6 +29,15 @@ airl_env_pytorch:
     paths:
        - airl_env_pytorch.def
 
+airl_env_qdax:
+  stage: build
+  script:
+     - /bin/bash ./.gitlabci/ci_script.sh --basename airl_env_qdax --tag "qdax_${CI_COMMIT_SHORT_SHA}"
+  artifacts:
+    paths:
+       - airl_env_qdax.def
+
+
 launch_experiment:
   stage: deploy
   script:
