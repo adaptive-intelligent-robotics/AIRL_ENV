@@ -8,6 +8,7 @@ Contents:
 """
 
 import hpccm
+from airl_building_blocks import *
 # Set to 'docker' to generate a Dockerfile or set to 'singularity' to
 # generate a Singularity definition file
 hpccm.config.set_container_format('singularity')
@@ -23,6 +24,4 @@ print(hpccm.primitives.shell(commands=['ln -s /usr/bin/python3 /usr/bin/python']
 
 ## ==== Composition of building blocks ====
 print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less', 'gdb']))
-
-
-
+print(visu_server())
