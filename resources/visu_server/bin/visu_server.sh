@@ -43,7 +43,7 @@ port_turbovnc=$((5900+$value))
 
 echo "Starting novnc"
 cd /opt/noVNC
-bash -c "./utils/launch.sh --listen $port_novnc --vnc localhost:$port_turbovnc "  &> /tmp/novnc_$USER.log &
+bash -c "./utils/novnc_proxy --listen $port_novnc --vnc localhost:$port_turbovnc "  &> /tmp/novnc_$USER.log &
 novnc_pid="$!"
 cd - &>/dev/null
 sleep 0.1
