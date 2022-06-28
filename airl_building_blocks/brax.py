@@ -28,7 +28,13 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         super(brax, self).__init__(**kwargs)
 
-        self.__ospackages = kwargs.get('ospackages', [ ])
+        self.__ospackages = kwargs.get('ospackages', [ 
+                                                      'cmake',
+                                                      'ffmpeg',
+                                                      'xvfb',
+                                                      'git',
+                                                      'python3-pip',
+                                                     ])
         self.__commands = [] # Filled in by __setup()
         self.__wd = '/git' # working directory
 
@@ -46,18 +52,27 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self += pip(packages=['absl-py==1.0.0',
                               'jax==0.3.10',
                               'brax==0.0.12',
+                              'dm-haiku==0.0.5',
                               'flax==0.4.1',
-                              'gym==0.15.4',
-                              'numpy==1.19.5',
-                              'scikit-learn==1.0.1',
-                              'scipy==1.7.3',
+                              'gym==0.23.1',
+                              'ipython',
+                              'jupyter',
+                              'numpy==1.22.3',
+                              'protobuf==3.19.4',
+                              'scikit-learn==1.0.2',
+                              'scipy==1.8.0',
                               'seaborn==0.11.2',
                               'sklearn==0.0',
+                              'tensorflow-probability==0.15.0',
                               'typing-extensions==3.10',
-                              'hydra-core==1.1.2'
+                              'hydra-core==1.1.2',
+                              'tk==0.1.0',
+                              'pre-commit==2.12.1',
+                              'pytest==6.2.5',
+                              'pytest-assume==2.4.3',
                               ], 
                               pip='pip3')
-        self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_releases.html'], pip='pip3')
+        self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
         self += shell(commands=self.__commands)
         
         self += comment('====DONE BRAX====')
