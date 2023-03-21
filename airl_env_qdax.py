@@ -16,7 +16,7 @@ from airl_building_blocks import *
 # generate a Singularity definition file
 hpccm.config.set_container_format('singularity')
 
-print(hpccm.primitives.baseimage(image='nvidia/cuda:11.4.2-cudnn8-devel-ubuntu20.04', _docker_env=False))
+print(hpccm.primitives.baseimage(image='nvidia/cuda:12.0.1-cudnn8-devel-ubuntu20.04', _docker_env=False))
 print(hpccm.primitives.label(metadata={'Author': 'luca.grillotti16@imperial.ac.uk', 'Version': 'v1.0'}))
 
 ## ==== Common dependencies ====
