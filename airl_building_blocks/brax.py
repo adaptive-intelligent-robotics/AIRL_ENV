@@ -30,13 +30,15 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
 
         self.__ospackages = kwargs.get('ospackages', [ 
                                                       'cmake',
+                                                      'g++',
                                                       'ffmpeg',
                                                       'xvfb',
                                                       'git',
                                                       'python3-pip',
-                                                     ])
-        self.__commands = [] # Filled in by __setup()
-        self.__wd = '/git' # working directory
+                                                      'python3-dev',
+                                                      ])
+        self.__commands = []  # Filled in by __setup()
+        self.__wd = '/git'  # working directory
 
         # Construct the series of steps to execute
         self.__setup()
@@ -70,9 +72,11 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
                               'pre-commit==2.12.1',
                               'pytest==6.2.5',
                               'pytest-assume==2.4.3',
+                              'wheel',
                               ], 
                               pip='pip3')
-        self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
+
+        # self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
         self += shell(commands=self.__commands)
         
         self += comment('====DONE BRAX====')
@@ -82,15 +86,17 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
            self.__commands"""
 
         # Clone source
-        #self.__commands.append(self.clone_step(commit='34a70fa16497fd81ac2940f9e4a7c96bbfb31e86',
-        #                                       repository='git://github.com/google/brax.git',
-        #                                       path=self.__wd, directory='brax'))
-
+        self.__commands.append(self.clone_step(commit='main',
+                                               repository='https://github.com/google/jax',
+                                               path=self.__wd, directory='jax'))
         # Configure and Install
-        #self.__commands.append(f"cd {self.__wd}/brax/")
-        #self.__commands.append("pip3 install -e .")
-        #self.__commands.append(f"cd {self.__wd}")
-        
+        self.__commands.append(f"cd {self.__wd}/jax/")
+        self.__commands.append("python build/build.py --enable_cuda --cuda_version=12.0 --cudnn_version=8")
+        self.__commands.append("pip3 install dist/*.whl")
+
+        # self.__commands.append("pip3 install -e .")
+        # self.__commands.append(f"cd {self.__wd}")
+        #
         # Cleanup directory
         #self.__commands.append( self.cleanup_step([ posixpath.join(self.__wd, 'brax') ] ))
 
