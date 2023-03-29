@@ -34,3 +34,4 @@ print(visu_server())
 print(qdax())
 
 print(hpccm.primitives.shell(commands=['rm -d /git || true']))
+print(hpccm.primitives.shell(commands=['mkdir /project/']))

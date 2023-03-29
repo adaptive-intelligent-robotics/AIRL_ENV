@@ -53,7 +53,7 @@ class qdax(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self += packages(ospackages=self.__ospackages)
 
         self += shell(commands=self.__commands)
-        self += pip(packages=['jaxlib==0.4.7+cuda12_cudnn88 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
+        self += pip(packages=['jax==0.4.7', 'jaxlib==0.4.7+cuda12_cudnn88 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
         
         self += comment('====DONE QDax====')
 
@@ -70,7 +70,7 @@ class qdax(bb_base, hpccm.templates.git, hpccm.templates.rm):
                                                path=self.__wd,
                                                directory='QDax')
                                )
-        self.__commands.append(f"cd {self.__wd}")
+        self.__commands.append(f"cd {self.__wd}/QDax/")
         self.__commands.append("pip3 install -r requirements.txt")
         self.__commands.append(self.cleanup_step([path_qdax]))
 
