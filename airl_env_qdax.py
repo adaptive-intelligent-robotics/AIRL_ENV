@@ -31,5 +31,6 @@ print(hpccm.building_blocks.packages(ospackages=['emacs', 'vim', 'less', 'gdb'])
 
 #  print(hexapod_common())
 print(visu_server())
-print(brax())
+print(qdax())
 
+print(hpccm.primitives.shell(commands=['rm -d /git || true']))
