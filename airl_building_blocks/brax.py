@@ -41,7 +41,7 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self.__wd = '/git'  # working directory
 
         # Construct the series of steps to execute
-        self.__setup()
+        #  self.__setup()
 
         # Fill in container instructions
         self.__instructions()
@@ -52,21 +52,20 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
         self += comment('====INSTALLING BRAX====')
         self += packages(ospackages=self.__ospackages)
         self += pip(packages=['absl-py==1.0.0',
-                              'jax==0.3.10',
-                              'brax==0.0.12',
-                              'dm-haiku==0.0.5',
-                              'flax==0.4.1',
+                              'jax==0.4.7',
+                              'brax==0.1.2',
+                              'dm-haiku==0.0.9',
+                              'flax==0.6.7',
                               'gym==0.23.1',
                               'ipython',
                               'jupyter',
-                              'numpy==1.22.3',
+                              'numpy==1.24.2',
                               'protobuf==3.19.4',
                               'scikit-learn==1.0.2',
                               'scipy==1.8.0',
                               'seaborn==0.11.2',
-                              'sklearn==0.0',
                               'tensorflow-probability==0.15.0',
-                              'typing-extensions==3.10',
+                              'typing-extensions==4.1.1',
                               'hydra-core==1.1.2',
                               'tk==0.1.0',
                               'pre-commit==2.12.1',
@@ -76,7 +75,7 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
                               ], 
                               pip='pip3')
 
-        # self += pip(packages=['jaxlib==0.3.10+cuda11_cudnn82 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
+        self += pip(packages=['jaxlib==0.4.7+cuda12_cudnn88 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html'], pip='pip3')
         self += shell(commands=self.__commands)
         
         self += comment('====DONE BRAX====')
@@ -84,15 +83,9 @@ class brax(bb_base, hpccm.templates.git, hpccm.templates.rm):
     def __setup(self):
         """Construct the series of shell commands, i.e., fill in
            self.__commands"""
-
+        ...
         # Clone source
-        self.__commands.append(self.clone_step(commit='main',
-                                               repository='https://github.com/google/jax',
-                                               path=self.__wd, directory='jax'))
         # Configure and Install
-        self.__commands.append(f"cd {self.__wd}/jax/")
-        self.__commands.append("python build/build.py --enable_cuda --cuda_version=12.0 --cudnn_version=8")
-        self.__commands.append("pip3 install dist/*.whl")
 
         # self.__commands.append("pip3 install -e .")
         # self.__commands.append(f"cd {self.__wd}")
