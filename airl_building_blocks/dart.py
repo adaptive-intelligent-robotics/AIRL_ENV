@@ -92,7 +92,7 @@ class dart(bb_base, hpccm.templates.git, hpccm.templates.rm):
             self.__commands.append('PATH=/usr/bin/:${PATH} cmake -DDART_ENABLE_SIMD=ON -DCMAKE_INSTALL_PREFIX:PATH=/workspace -DCMAKE_BUILD_TYPE=Release ..')
         else:
             self.__commands.append('cmake -DCMAKE_INSTALL_PREFIX:PATH=/workspace  -DCMAKE_BUILD_TYPE=Release  ..')
-        self.__commands.append('make -j16 install')
+        self.__commands.append('make install')
 
         
         self.__install_dart_py()
