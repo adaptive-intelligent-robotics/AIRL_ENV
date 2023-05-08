@@ -159,7 +159,7 @@ if [ -f "${imagefile}" ]; then
 	
 	echo "Login to remote"
 	apptainer remote add --no-login ghcr oras://ghcr.io
-	apptainer remote login -u aneoshun --password $token
+	apptainer remote login -u aneoshun --password $token ghcr
 	apptainer push "${imagefile}" "${uri}" 
 	
 	
