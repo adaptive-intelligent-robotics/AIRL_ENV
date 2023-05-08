@@ -24,6 +24,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build image
-        run: cd $GITHUB_WORKSPACE && /bin/bash ./.ci/ci_script.sh --basename airl_env_bare --tag "bare_${GITHUB_SHA}"
+        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_bare --tag "bare_${GITHUB_SHA}"
 
    
