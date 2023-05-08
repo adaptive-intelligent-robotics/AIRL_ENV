@@ -146,11 +146,11 @@ if [ -f "${imagefile}" ]; then
             uri="${uri}:${tag}"
         fi
 	
- 	echo "Adding key"
-	apptainer key import $SREGISTRY_KEY
+ 	#echo "Adding key"
+	#apptainer key import $SREGISTRY_KEY
 
-	echo "Signing container"
-	apptainer sign "${imagefile}"
+	#echo "Signing container"
+	#apptainer sign "${imagefile}"
 	
 	echo "Login to remote"
 	apptainer remote add --no-login ghcr oras://ghcr.io
