@@ -154,7 +154,7 @@ if [ -f "${imagefile}" ]; then
 	
 	echo "Login to remote"
 	apptainer remote add --no-login ghcr oras://ghcr.io
-	apptainer remote login -u aneoshun --tokenfile ${{ secrets.GITHUB_TOKEN }}
+	apptainer remote login -u aneoshun --tokenfile ${GITHUB_TOKEN}
 	apptainer push "${imagefile}" "${uri}" 
 	
 	
