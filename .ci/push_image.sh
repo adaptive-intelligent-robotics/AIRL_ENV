@@ -59,6 +59,11 @@ while true; do
             tag="${1:-}"
             shift
         ;;
+        -k|--token)
+            shift
+            token="${1:-}"
+            shift
+        ;;
         -c|--cli)
             shift
             cli="${1:-}"
@@ -154,7 +159,7 @@ if [ -f "${imagefile}" ]; then
 	
 	echo "Login to remote"
 	apptainer remote add --no-login ghcr oras://ghcr.io
-	apptainer remote login -u aneoshun --tokenfile ${GITHUB_TOKEN}
+	apptainer remote login -u aneoshun --password $token
 	apptainer push "${imagefile}" "${uri}" 
 	
 	
