@@ -129,8 +129,8 @@ if [ -f "${imagefile}" ]; then
 
     # Example testing using run (you could also use test command)
 
-    echo "Testing the image... Marco!"
-    singularity exec $imagefile echo "Polo!"
+    # echo "Testing the image... Marco!"
+    # singularity exec $imagefile echo "Polo!"
 
     # Example sregistry commands to push to endpoints
     
