@@ -107,7 +107,7 @@ is_valid_client () {
 
 # Test if client is valid
 
-clients=("google-storage" "registry" "globus" "dropbox" "google-drive")
+clients=("ghcr")
 
 if [ "${cli}" != "" ]; then
     is_valid_client "${cli}" "${clients[@]}"
@@ -146,18 +146,16 @@ if [ -f "${imagefile}" ]; then
             uri="${uri}:${tag}"
         fi
 	
-        #echo "Pushing ${uri} to ${cli}://"
-        #echo "SREGISTRY_CLIENT=${cli} sregistry push --name ${uri} ${imagefile}"
-        #SREGISTRY_CLIENT="${cli}" sregistry --debug push --name "${uri}" "${imagefile}"
-	echo "Adding key"
-	singularity key import $SREGISTRY_KEY
+ 	echo "Adding key"
+	apptainer key import $SREGISTRY_KEY
 
 	echo "Signing container"
-	singularity sign "${imagefile}"
+	apptainer sign "${imagefile}"
 	
 	echo "Login to remote"
-	singularity remote login --tokenfile $SREGISTRY_TOKEN
-	singularity push "${imagefile}" "${uri}" 
+	apptainer remote add --no-login ghcr oras://ghcr.io
+	apptainer remote login -u aneoshun --tokenfile ${{ secrets.GITHUB_TOKEN }}
+	apptainer push "${imagefile}" "${uri}" 
 	
 	
     else
