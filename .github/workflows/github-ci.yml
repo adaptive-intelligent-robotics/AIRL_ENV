@@ -13,19 +13,43 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   airl_env_bare:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     container: 
       image: aneoshun/airl_build_env:latest
       options: --privileged
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
       - name: Build image
-        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_bare --tag "bare_${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
+        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_bare --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
+        
+  airl_env_base:
+    runs-on: ubuntu-latest
+    container: 
+      image: aneoshun/airl_build_env:latest
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build image
+        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_base --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
 
-   
+  airl_env_pytorch:
+    runs-on: ubuntu-latest
+    container: 
+      image: aneoshun/airl_build_env:latest
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build image
+        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_pytorch --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
+
+  airl_env_qdax:
+    runs-on: ubuntu-latest
+    container: 
+      image: aneoshun/airl_build_env:latest
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build image
+        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_qdax --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
+
+ 
