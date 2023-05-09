@@ -22,26 +22,6 @@ jobs:
       - name: Build image
         run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_bare --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
         
-  airl_env_base:
-    runs-on: ubuntu-latest
-    container: 
-      image: aneoshun/airl_build_env:latest
-      options: --privileged
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build image
-        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_base --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
-
-  airl_env_pytorch:
-    runs-on: ubuntu-latest
-    container: 
-      image: aneoshun/airl_build_env:latest
-      options: --privileged
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build image
-        run: cd $GITHUB_WORKSPACE && ls && /bin/bash ./.ci/ci_script.sh --basename airl_env_pytorch --tag "${GITHUB_SHA}" --token ${{ secrets.GITHUB_TOKEN }}
-
   airl_env_qdax:
     runs-on: ubuntu-latest
     container: 
